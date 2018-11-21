@@ -337,8 +337,10 @@ public class frmMantenedorG extends javax.swing.JFrame {
     }//GEN-LAST:event_tblMouseClicked
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        activarAgregar();
-        lblSub.setText("Modificar");
+        if(tbl.getSelectedRow()==-1){
+            activarAgregar();
+            lblSub.setText("Modificar");        
+        }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
