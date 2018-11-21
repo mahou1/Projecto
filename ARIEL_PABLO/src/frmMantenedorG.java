@@ -24,6 +24,8 @@ public class frmMantenedorG extends javax.swing.JFrame {
     public frmMantenedorG() {
         initComponents();
         setGuia();
+        txtNombre.setEnabled(false);
+        txtTelefono.setEnabled(false);
     }
   
     public void setGuia(){
@@ -42,9 +44,10 @@ public class frmMantenedorG extends javax.swing.JFrame {
         }
         
         tbl.setModel(model);
-        System.out.println(model.getRowCount());
+        
         
     }
+    
     
      public JTable getjTbl() {
         return tbl;
@@ -67,16 +70,18 @@ public class frmMantenedorG extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         lblTitulo = new javax.swing.JLabel();
-        btnAgregar = new javax.swing.JButton();
+        btnAceptar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        btnVolver = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         tbl = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txtTelefono = new javax.swing.JTextField();
+        btnAgregar = new javax.swing.JButton();
+        btnVolver = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -95,21 +100,31 @@ public class frmMantenedorG extends javax.swing.JFrame {
 
         lblTitulo.setText("Mantenedor Guía");
 
-        btnAgregar.setText("Agregar");
-        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+        btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarActionPerformed(evt);
+                btnAceptarActionPerformed(evt);
             }
         });
 
         btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setText("Eliminar");
-
-        btnVolver.setText("Volver");
-        btnVolver.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVolverActionPerformed(evt);
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
             }
         });
 
@@ -124,11 +139,30 @@ public class frmMantenedorG extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(tbl);
 
         jLabel1.setText("Nombre :");
 
         jLabel2.setText("Telefono :");
+
+        btnAgregar.setText("Agregar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
+
+        btnVolver.setText("Volver");
+        btnVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVolverActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -138,28 +172,33 @@ public class frmMantenedorG extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAgregar)
-                        .addGap(31, 31, 31)
-                        .addComponent(btnVolver)
+                        .addComponent(btnAceptar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCancelar)
                         .addGap(2, 2, 2))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 42, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnModificar)
-                                .addGap(27, 27, 27)
-                                .addComponent(btnEliminar)))))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel2)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel1)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(btnAgregar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnModificar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnEliminar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnVolver)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(36, 36, 36))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(169, 169, 169)
@@ -176,7 +215,9 @@ public class frmMantenedorG extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnModificar)
-                    .addComponent(btnEliminar))
+                    .addComponent(btnEliminar)
+                    .addComponent(btnAgregar)
+                    .addComponent(btnVolver))
                 .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -187,8 +228,8 @@ public class frmMantenedorG extends javax.swing.JFrame {
                     .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnVolver)
-                    .addComponent(btnAgregar))
+                    .addComponent(btnCancelar)
+                    .addComponent(btnAceptar))
                 .addContainerGap(50, Short.MAX_VALUE))
         );
 
@@ -206,14 +247,12 @@ public class frmMantenedorG extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        frmMenu menu = new frmMenu();
-        this.dispose();
-        menu.pack();
-        menu.setVisible(true);
-    }//GEN-LAST:event_btnVolverActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        txtNombre.setEnabled(false);
+        txtTelefono.setEnabled(false);
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         String nom,telefono;
         nom = txtNombre.getText();
         telefono = txtTelefono.getText();
@@ -228,8 +267,61 @@ public class frmMantenedorG extends javax.swing.JFrame {
         catch(Exception e){
             JOptionPane.showMessageDialog(null,"Error al agregar","",2);
         }
+        reset();
+    }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+        frmMenu menu = new frmMenu();
+        this.dispose();
+        menu.pack();
+        menu.setVisible(true);
+    }//GEN-LAST:event_btnVolverActionPerformed
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        txtNombre.setEnabled(true);
+        txtTelefono.setEnabled(true);
+        txtNombre.setText("");
+        txtTelefono.setText("");
     }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void tblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMouseClicked
+        // Obtenemos el primer dato del renglon seleccionado
+        int index =  tbl.getSelectedRow();
+        String id = tbl.getValueAt(index, 0).toString();
+        String nombre = tbl.getValueAt(index,1).toString();
+        String telefono = tbl.getValueAt(index,2).toString();
+             
+        txtNombre.setText(nombre);
+        txtTelefono.setText(telefono);
     
+    }//GEN-LAST:event_tblMouseClicked
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        txtNombre.setEnabled(true);
+        txtTelefono.setEnabled(true);
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        String nom,telefono;
+        int index =  tbl.getSelectedRow();
+        int indice = Integer.parseInt(tbl.getValueAt(index, 0).toString());
+        Query query = new Query();
+        try{
+            query.delete("guia", "idGuia = "+indice );
+            JOptionPane.showMessageDialog(null,"Exito al Eliminar","",2);
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null,"Error al Eliminar","",2);
+        }
+        reset();
+                
+    }//GEN-LAST:event_btnEliminarActionPerformed
+    public void reset(){
+        this.dispose();
+        frmMantenedorG mantenedor = new frmMantenedorG();
+        mantenedor.pack();
+        mantenedor.setVisible(true);
+    }
      
     /**
      * @param args the command line arguments
@@ -270,7 +362,9 @@ public class frmMantenedorG extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnVolver;

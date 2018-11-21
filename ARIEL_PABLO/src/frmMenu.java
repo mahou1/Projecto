@@ -126,7 +126,7 @@ public class frmMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnToursActionPerformed
 
     private void btnGuiasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuiasActionPerformed
-        frmMGuias guias = new frmMGuias();
+        frmMantenedorG guias = new frmMantenedorG();
         this.dispose();
         guias.pack();
         guias.setVisible(true);
