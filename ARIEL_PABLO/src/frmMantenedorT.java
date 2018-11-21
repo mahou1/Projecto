@@ -348,6 +348,12 @@ public class frmMantenedorT extends javax.swing.JFrame {
         txtNombre.setEnabled(true);
         txtPrecio.setEnabled(true);
         txtUbicacion.setEnabled(true);
+        txtDescripcion.setText("");
+        txtDuracion.setText("");
+        txtNombre.setText("");
+        txtPrecio.setText("");
+        txtUbicacion.setText("");
+        
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetalleActionPerformed
