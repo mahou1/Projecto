@@ -110,7 +110,7 @@ public class frmAgregarG extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         String nom,telefono;
         nom = txtNombre.getText();
@@ -132,10 +132,10 @@ public class frmAgregarG extends javax.swing.JFrame {
         cerrar();
     }//GEN-LAST:event_btnCancelarActionPerformed
     public void cerrar(){
-        frmMantenedor menu = new frmMantenedor();
+        frmMGuias guia = new frmMGuias();
         this.dispose();
-        menu.pack();
-        menu.setVisible(true);
+        guia.pack();
+        guia.setVisible(true);
     }
     
     /**

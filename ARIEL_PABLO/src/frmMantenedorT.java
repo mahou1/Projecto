@@ -16,29 +16,16 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author mahou
  */
-public class frmMantenedor extends javax.swing.JFrame {
+public class frmMantenedorT extends javax.swing.JFrame {
 
     /**
      * Creates new form Menu
      */
-    public frmMantenedor() {
+    public frmMantenedorT() {
         initComponents();
+        setTour();
     }
-    public void setSesion(){
-        String[] columnas = {"nombre","fecha","precio","disponibilad"};
-        DefaultTableModel model =  new DefaultTableModel(null,columnas);
-        Query q = new Query();
-        try{
-            ResultSet lista= q.select("*","sesion"," INNER JOIN tour ON sesion.idTour= tour.idTour");
-            while(lista.next()){
-                model.addRow(new Object[]{lista.getString("nombre"),lista.getString("fecha"),lista.getString("precio"),lista.getString("disponibilidad")});
-            }
-            q.cerrar();
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null,e,"",2);
-        }
-        tbl.setModel(model);
-    }
+   
     
     
     public void setTour(){
@@ -57,30 +44,8 @@ public class frmMantenedor extends javax.swing.JFrame {
         }
         tbl.setModel(model);
     }
-    public void setGuia(){
-         lblTitulo.setText("Guías");
-         String[] columnas = {"id","nombre","telefono"};
-        DefaultTableModel model =  new DefaultTableModel(null,columnas);
-        Query q = new Query();
-        try{
-            ResultSet lista= q.select("*","guia","");
-            while(lista.next()){
-                model.addRow(new Object[]{lista.getString("idGuia"),lista.getString("nombre"),lista.getString("telefono")});
-            }
-            q.cerrar();
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null,e,"",2);
-        }
-        tbl.setModel(model);
-    }
     
-     public JTable getjTbl() {
-        return tbl;
-    }
-    
-    public JLabel getLblTitulo(){
-        return lblTitulo;
-    }
+  
 
     /**
      * This method is called from within the constructor to initialize the form.
