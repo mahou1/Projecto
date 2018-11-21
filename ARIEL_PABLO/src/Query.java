@@ -20,7 +20,7 @@ public class Query {
     String url ="";
     String user="root";
     String pass="";
-    String name="bd";
+    String name="bd_tours";
     Connection conex;
     Statement sentencia;
     public Query(){
@@ -29,6 +29,7 @@ public class Query {
             url="jdbc:mysql://localhost:3306/"+name;
             conex=DriverManager.getConnection(url,user,pass);
             sentencia=conex.createStatement();
+            
         }catch(Exception e){
             System.out.println("Error en la conexion"+e);
         }

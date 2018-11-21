@@ -15,6 +15,7 @@ public class frmMGuias extends frmMantenedor{
      */
     public frmMGuias() {
         initComponents();
+        setGuia();
     }
 
     /**

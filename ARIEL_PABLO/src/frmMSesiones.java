@@ -1,3 +1,7 @@
+
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -16,6 +20,8 @@ public class frmMSesiones extends frmMantenedor {
     public frmMSesiones() {
         initComponents();
         setSesion();
+        getLblTitulo().setText("Sesiones");
+        
     }
 
     /**
@@ -83,6 +89,10 @@ public class frmMSesiones extends frmMantenedor {
         Sesion.pack();
         Sesion.setVisible(true);
     }  
+
+    private void getTbl() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

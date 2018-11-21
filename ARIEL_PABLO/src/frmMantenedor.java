@@ -1,4 +1,9 @@
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -20,17 +25,61 @@ public class frmMantenedor extends javax.swing.JFrame {
         initComponents();
     }
     public void setSesion(){
-        lblTitulo.setText("Sesiones");
         String[] columnas = {"nombre","fecha","precio","disponibilad"};
         DefaultTableModel model =  new DefaultTableModel(null,columnas);
-        model.addRow(new Object[]{"Nombre","Fecha","Precio","Disponibilidad"});
+        Query q = new Query();
+        try{
+            ResultSet lista= q.select("*","sesion"," INNER JOIN tour ON sesion.idTour= tour.idTour");
+            while(lista.next()){
+                model.addRow(new Object[]{lista.getString("nombre"),lista.getString("fecha"),lista.getString("precio"),lista.getString("disponibilidad")});
+            }
+            q.cerrar();
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null,e,"",2);
+        }
         tbl.setModel(model);
     }
+    
+    
     public void setTour(){
-         lblTitulo.setText("Tours");
+        lblTitulo.setText("Tours");
+        String[] columnas = {"id","nombre","precio","duracion"};
+        DefaultTableModel model =  new DefaultTableModel(null,columnas);
+        Query q = new Query();
+        try{
+            ResultSet lista= q.select("*","tour","");
+            while(lista.next()){
+                model.addRow(new Object[]{lista.getString("idTour"),lista.getString("nombre"),lista.getString("precio"),lista.getString("duracion")});
+            }
+            q.cerrar();
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null,e,"",2);
+        }
+        tbl.setModel(model);
     }
     public void setGuia(){
          lblTitulo.setText("Guías");
+         String[] columnas = {"id","nombre","telefono"};
+        DefaultTableModel model =  new DefaultTableModel(null,columnas);
+        Query q = new Query();
+        try{
+            ResultSet lista= q.select("*","guia","");
+            while(lista.next()){
+                model.addRow(new Object[]{lista.getString("idGuia"),lista.getString("nombre"),lista.getString("telefono")});
+            }
+            q.cerrar();
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null,e,"",2);
+        }
+        tbl.setModel(model);
+    }
+    
+     public JTable getjTbl() {
+        return tbl;
+    }
+    
+    public JLabel getLblTitulo(){
+        return lblTitulo;
     }
 
     /**
@@ -42,32 +91,34 @@ public class frmMantenedor extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         lblTitulo = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tbl = new javax.swing.JTable();
         btnAgregar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnDetalle = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tbl = new javax.swing.JTable();
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         lblTitulo.setText("Mantenedor");
-
-        tbl.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {},
-                {},
-                {},
-                {}
-            },
-            new String [] {
-
-            }
-        ));
-        jScrollPane1.setViewportView(tbl);
 
         btnAgregar.setText("Agregar");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -89,6 +140,19 @@ public class frmMantenedor extends javax.swing.JFrame {
             }
         });
 
+        tbl.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(tbl);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -100,28 +164,28 @@ public class frmMantenedor extends javax.swing.JFrame {
                         .addComponent(lblTitulo))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(26, 26, 26)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnAgregar)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnModificar)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnEliminar)
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnVolver)
-                                    .addComponent(btnDetalle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
-                .addContainerGap(32, Short.MAX_VALUE))
+                        .addComponent(btnAgregar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnModificar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEliminar)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnVolver)
+                            .addComponent(btnDetalle)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(lblTitulo)
-                .addGap(34, 34, 34)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgregar)
                     .addComponent(btnModificar)
@@ -129,14 +193,16 @@ public class frmMantenedor extends javax.swing.JFrame {
                     .addComponent(btnDetalle))
                 .addGap(28, 28, 28)
                 .addComponent(btnVolver)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,6 +218,8 @@ public class frmMantenedor extends javax.swing.JFrame {
         menu.pack();
         menu.setVisible(true);
     }//GEN-LAST:event_btnVolverActionPerformed
+
+   
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
@@ -202,7 +270,9 @@ public class frmMantenedor extends javax.swing.JFrame {
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnVolver;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JTable tbl;
     // End of variables declaration//GEN-END:variables

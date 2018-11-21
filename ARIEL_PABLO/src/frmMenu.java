@@ -15,6 +15,7 @@ public class frmMenu extends javax.swing.JFrame {
      */
     public frmMenu() {
         initComponents();
+        Query q = new Query();
     }
 
     /**
@@ -125,10 +126,10 @@ public class frmMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnToursActionPerformed
 
     private void btnGuiasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuiasActionPerformed
-        frmMSesiones Sesion = new frmMSesiones();
+        frmMGuias guias = new frmMGuias();
         this.dispose();
-        Sesion.pack();
-        Sesion.setVisible(true);
+        guias.pack();
+        guias.setVisible(true);
     }//GEN-LAST:event_btnGuiasActionPerformed
 
     /**

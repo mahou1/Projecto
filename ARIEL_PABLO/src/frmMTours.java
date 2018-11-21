@@ -15,6 +15,7 @@ public class frmMTours extends frmMantenedor{
      */
     public frmMTours() {
         initComponents();
+        setTour();
     }
 
     /**
