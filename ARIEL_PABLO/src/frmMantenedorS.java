@@ -345,6 +345,11 @@ public class frmMantenedorS extends javax.swing.JFrame {
         cmbTour.setEnabled(true);
         txtFecha.setEnabled(true);
         txtDisponibilidad.setEnabled(true);
+        txtDisponibilidad.setText("");
+        txtFecha.setText("");
+        cmbTour.setSelectedIndex(-1);
+        cmbGuia.setSelectedIndex(-1);
+        lblDetalle.setText("Agregar Sesion");
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void cmbGuiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbGuiaActionPerformed
