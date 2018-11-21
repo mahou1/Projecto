@@ -31,10 +31,16 @@ public class frmMantenedorS extends javax.swing.JFrame {
     public void cargarDatos(){
         Query q = new Query();
         try{
-            ResultSet  lista = q.select("*", "guia", "");
+            ResultSet  lista;
+            lista= q.select("*", "guia", "");
             while(lista.next()){
                 cmbGuia.addItem(lista.getString("nombre"));
                 cmbGuia.setActionCommand(lista.getString("idGuia"));
+            }
+            lista=q.select("idTour,nombre","tour", "");
+            while(lista.next()){
+                cmbTour.addItem(lista.getString("nombre"));
+                cmbTour.setActionCommand(lista.getString("idTour"));
             }
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null,"Error "+e,"",2);
@@ -333,7 +339,12 @@ public class frmMantenedorS extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        btnAceptar.setEnabled(true);
+        btnCancelar.setEnabled(true);
         cmbGuia.setEnabled(true);
+        cmbTour.setEnabled(true);
+        txtFecha.setEnabled(true);
+        txtDisponibilidad.setEnabled(true);
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void cmbGuiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbGuiaActionPerformed
