@@ -108,6 +108,11 @@ public class frmMantenedorT extends javax.swing.JFrame {
         });
 
         btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setText("Eliminar");
 
@@ -136,6 +141,11 @@ public class frmMantenedorT extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(tbl);
 
         pnlDetalle.setEnabled(false);
@@ -345,38 +355,93 @@ public class frmMantenedorT extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDetalleActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        if(lblDetalle.getText().equals("Agregar Tour")){
-            String nom,descrip,duracion;
-            int precio = Integer.parseInt(txtPrecio.getText());
-            short ubicacion = Short.parseShort(txtUbicacion.getText());
-            nom = txtNombre.getText();
-            descrip = txtDescripcion.getText();
-            duracion = txtDuracion.getText();
-            Query query = new Query();
+        String nom,descrip,duracion,ubicacion;
+        int precio;
+        int index = tbl.getSelectedRow();
+        int id = Integer.parseInt(tbl.getValueAt(index, 0).toString());
+        precio = Integer.parseInt(txtPrecio.getText());
+        ubicacion = txtUbicacion.getText();
+        nom = txtNombre.getText();
+        descrip = txtDescripcion.getText();
+        duracion = txtDuracion.getText();
+        Query query = new Query();
+        if(lblDetalle.getText().equals("Agregar Tour")){ 
             try{
                 String valores = "null,'"+nom+"','"+descrip+"',"+precio+",'"+duracion+"',"+ubicacion;
                 query.insert("tour",valores);
                 JOptionPane.showMessageDialog(null,"Agregado exitosamente","",2);
             }
             catch(Exception e){
-                JOptionPane.showMessageDialog(null,"No se pueod agregar","",2);
+                JOptionPane.showMessageDialog(null,"No se pudo actualizar","",2);
             }
-            query.cerrar();
-            frmMantenedorT Tour = new frmMantenedorT();
-            this.dispose();
-            Tour.pack();
-            Tour.setVisible(true);
-        }
+           
+
+        }else{
+           if(lblDetalle.getText().equals("Modificar Tour")){
+                try{
+                    String valores = "nombre='"+nom+"',descripcion='"+descrip+"',precio="+precio+",duracion='"+duracion+"',ubicacion="+ubicacion;
+                    query.update("tour",valores," WHERE idTour="+id);
+                    JOptionPane.showMessageDialog(null,"Actualizacion exitosa","",2);
+                }
+                catch(Exception e){
+                    JOptionPane.showMessageDialog(null,"No se pueod agregar","",2);
+            }
+          }
         
+        }
+        frmMantenedorT Tour = new frmMantenedorT();
+        this.dispose();
+        Tour.pack();
+        Tour.setVisible(true);
+        query.cerrar();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        frmMTours tour = new frmMTours();
+        frmMantenedorT Tour = new frmMantenedorT();
         this.dispose();
-        tour.pack();
-        tour.setVisible(true);
+        Tour.pack();
+        Tour.setVisible(true);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void tblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMouseClicked
+        int index = tbl.getSelectedRow();
+        int id = Integer.parseInt(tbl.getValueAt(index, 0).toString());
+        
+        try{
+            Query q = new Query();
+            ResultSet item = q.select("*", "tour", " WHERE idTour="+id);
+            if(item.next()){
+                txtDescripcion.setText(item.getString("descripcion"));
+                 txtDuracion.setText(item.getString("duracion"));
+                 txtNombre.setText(item.getString("nombre"));
+                 txtPrecio.setText(item.getString("precio"));
+                 txtUbicacion.setText(item.getString("ubicacion"));
+            }
+            
+            q.cerrar();
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null,e,"",2);
+        }
+                        
+
+        
+    }//GEN-LAST:event_tblMouseClicked
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        int e = tbl.getSelectedRow();
+        if(e!=-1){
+            lblDetalle.setText("Modificar Tour");
+            btnCancelar.setEnabled(true);
+            btnAceptar.setEnabled(true);
+            txtDescripcion.setEnabled(true);
+            txtDuracion.setEnabled(true);
+            txtNombre.setEnabled(true);
+            txtPrecio.setEnabled(true);
+            txtUbicacion.setEnabled(true);
+        };
+        
+    }//GEN-LAST:event_btnModificarActionPerformed
+   
     /**
      * @param args the command line arguments
      */
