@@ -62,7 +62,7 @@ public class Query {
     
     public void insert(String tabla,String valores){
         try{
-            sentencia.executeUpdate("INSERT INTO  "+tabla+" VALUES ("+valores+")");
+            sentencia.executeUpdate("INSERT INTO "+tabla+" VALUES ("+valores+")");
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null,e,"",2);
         }
