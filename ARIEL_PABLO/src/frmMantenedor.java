@@ -21,8 +21,10 @@ public class frmMantenedor extends javax.swing.JFrame {
     }
     public void setSesion(){
         lblTitulo.setText("Sesiones");
-        DefaultTableModel model = (DefaultTableModel) tbl.getModel();
+        String[] columnas = {"nombre","fecha","precio","disponibilad"};
+        DefaultTableModel model =  new DefaultTableModel(null,columnas);
         model.addRow(new Object[]{"Nombre","Fecha","Precio","Disponibilidad"});
+        tbl.setModel(model);
     }
     public void setTour(){
          lblTitulo.setText("Tours");
