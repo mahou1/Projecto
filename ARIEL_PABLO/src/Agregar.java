@@ -6,16 +6,15 @@
 
 /**
  *
- * @author Pablo
+ * @author mahou
  */
-public class frmMSesiones extends frmMantenedor {
+public class Agregar extends javax.swing.JFrame {
 
     /**
-     * Creates new form frmMSesiones
+     * Creates new form Agregar
      */
-    public frmMSesiones() {
+    public Agregar() {
         initComponents();
-        setSesion();
     }
 
     /**
@@ -60,29 +59,23 @@ public class frmMSesiones extends frmMantenedor {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmMSesiones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Agregar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmMSesiones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Agregar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmMSesiones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Agregar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmMSesiones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Agregar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmMSesiones().setVisible(true);
+                new Agregar().setVisible(true);
             }
         });
     }
-    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        frmMSesiones Sesion = new frmMSesiones();
-        this.setVisible(false);
-        Sesion.pack();
-        Sesion.setVisible(true);
-    }  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

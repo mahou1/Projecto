@@ -68,6 +68,11 @@ public class frmMantenedor extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tbl);
 
         btnAgregar.setText("Agregar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnModificar.setText("Modificar");
 
@@ -145,6 +150,10 @@ public class frmMantenedor extends javax.swing.JFrame {
         menu.pack();
         menu.setVisible(true);
     }//GEN-LAST:event_btnVolverActionPerformed
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAgregarActionPerformed
 
     /**
      * @param args the command line arguments
