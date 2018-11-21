@@ -219,10 +219,6 @@ public class frmMantenedor extends javax.swing.JFrame {
         menu.setVisible(true);
     }//GEN-LAST:event_btnVolverActionPerformed
 
-   
-    public void abrirAgregar(java.awt.event.ActionEvent evt){
-        
-    }
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         if(lblTitulo.getText().equals("Tours")){
             frmAgregarT agregar = new frmAgregarT();

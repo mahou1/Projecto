@@ -45,15 +45,7 @@ public class frmMTours extends frmMantenedor{
 
     /**
      * @param args the command line arguments
-     */
-
-    public void abrirAgregar(java.awt.event.ActionEvent evt) {                                           
-        // TODO add your handling code here:
-        frmAgregarT agregar = new frmAgregarT();
-        this.dispose();
-        agregar.pack();
-        agregar.setVisible(true);System.out.println("asdsad");
-    }                                          
+     */                                     
 
 
     public static void main(String args[]) {
