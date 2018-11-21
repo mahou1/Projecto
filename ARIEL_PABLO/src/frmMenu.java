@@ -112,7 +112,7 @@ public class frmMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSesionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSesionesActionPerformed
-        frmMSesiones Sesion = new frmMSesiones();
+        frmMantenedorS Sesion = new frmMantenedorS();
         this.setVisible(false);
         Sesion.pack();
         Sesion.setVisible(true);
