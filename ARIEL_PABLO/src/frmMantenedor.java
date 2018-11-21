@@ -225,6 +225,18 @@ public class frmMantenedor extends javax.swing.JFrame {
             this.dispose();
             agregar.pack();
             agregar.setVisible(true);
+        }else{
+            if(lblTitulo.getText().equals("Sesiones")){
+                frmAgregarS agregar = new frmAgregarS();
+                this.dispose();
+                agregar.pack();
+                agregar.setVisible(true);
+            }else{
+                frmAgregarG agregar = new frmAgregarG();
+                this.dispose();
+                agregar.pack();
+                agregar.setVisible(true);
+            }
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
