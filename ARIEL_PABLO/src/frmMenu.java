@@ -119,7 +119,7 @@ public class frmMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSesionesActionPerformed
 
     private void btnToursActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnToursActionPerformed
-        frmMTours Tour = new frmMTours();
+        frmMantenedorT Tour = new frmMantenedorT();
         this.dispose();
         Tour.pack();
         Tour.setVisible(true);
