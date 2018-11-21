@@ -24,8 +24,19 @@ public class frmMantenedorG extends javax.swing.JFrame {
     public frmMantenedorG() {
         initComponents();
         setGuia();
+        desactivarAgregar();
+    }
+    public void desactivarAgregar(){
         txtNombre.setEnabled(false);
         txtTelefono.setEnabled(false);
+        btnAceptar.setEnabled(false);
+        btnCancelar.setEnabled(false);
+    }
+    public void activarAgregar(){
+        txtNombre.setEnabled(true);
+        txtTelefono.setEnabled(true);
+        btnAceptar.setEnabled(true);
+        btnCancelar.setEnabled(true);
     }
   
     public void setGuia(){
@@ -82,6 +93,7 @@ public class frmMantenedorG extends javax.swing.JFrame {
         txtTelefono = new javax.swing.JTextField();
         btnAgregar = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
+        lblSub = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -150,6 +162,12 @@ public class frmMantenedorG extends javax.swing.JFrame {
 
         jLabel2.setText("Telefono :");
 
+        txtTelefono.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTelefonoActionPerformed(evt);
+            }
+        });
+
         btnAgregar.setText("Agregar");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -163,6 +181,8 @@ public class frmMantenedorG extends javax.swing.JFrame {
                 btnVolverActionPerformed(evt);
             }
         });
+
+        lblSub.setText("Detalles ");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -188,7 +208,10 @@ public class frmMantenedorG extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(jLabel1)
                                     .addGap(18, 18, 18)
-                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(lblSub)
+                                    .addGap(57, 57, 57)))))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGap(40, 40, 40)
                         .addComponent(btnAgregar)
@@ -218,7 +241,9 @@ public class frmMantenedorG extends javax.swing.JFrame {
                     .addComponent(btnEliminar)
                     .addComponent(btnAgregar)
                     .addComponent(btnVolver))
-                .addGap(26, 26, 26)
+                .addGap(15, 15, 15)
+                .addComponent(lblSub)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -226,7 +251,7 @@ public class frmMantenedorG extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
                     .addComponent(btnAceptar))
@@ -248,8 +273,9 @@ public class frmMantenedorG extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        txtNombre.setEnabled(false);
-        txtTelefono.setEnabled(false);
+        desactivarAgregar();
+        txtNombre.setText("");
+        txtTelefono.setText("");
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
@@ -257,17 +283,31 @@ public class frmMantenedorG extends javax.swing.JFrame {
         nom = txtNombre.getText();
         telefono = txtTelefono.getText();
         Query query = new Query();
-        String valores = "null,'"+nom+"','"+telefono+"'";
-        try{
+        if(lblSub.getText().equals("Agregar")){
+            String valores = "null,'"+nom+"','"+telefono+"'";
             query.insert("guia",valores);
             JOptionPane.showMessageDialog(null,"Agregado exitosamente","",2); 
-            txtNombre.setText("");
-            txtTelefono.setText("");
+        }else{
+            if(lblSub.getText().equals("Modificar")){
+                int index =  tbl.getSelectedRow();
+                int indice = Integer.parseInt(tbl.getValueAt(index, 0).toString());
+                String valor = "nombre = '"+ nom+"', telefono = '"+telefono+"'" ;
+                String cond = " WHERE idGuia = "+ indice;
+                query.update("guia", valor, cond);
+            
+                        //String tabla,String data,String condicion){
+                        //"UPDATE  "+tabla+" SET "+data+condicion
+            }
         }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(null,"Error al agregar","",2);
-        }
+        
+        
+        txtNombre.setText("");
+        txtTelefono.setText("");
+        
         reset();
+        
+      
+        
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
@@ -278,10 +318,10 @@ public class frmMantenedorG extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        txtNombre.setEnabled(true);
-        txtTelefono.setEnabled(true);
+        activarAgregar();
         txtNombre.setText("");
         txtTelefono.setText("");
+        lblSub.setText("Agregar");
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void tblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMouseClicked
@@ -297,25 +337,32 @@ public class frmMantenedorG extends javax.swing.JFrame {
     }//GEN-LAST:event_tblMouseClicked
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        txtNombre.setEnabled(true);
-        txtTelefono.setEnabled(true);
+        activarAgregar();
+        lblSub.setText("Modificar");
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        String nom,telefono;
-        int index =  tbl.getSelectedRow();
-        int indice = Integer.parseInt(tbl.getValueAt(index, 0).toString());
-        Query query = new Query();
-        try{
-            query.delete("guia", "idGuia = "+indice );
-            JOptionPane.showMessageDialog(null,"Exito al Eliminar","",2);
+        String nom = txtNombre.getText();
+        int opc = JOptionPane.showConfirmDialog(null, "¿Desea eliminar "+nom+" ?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if(opc==0){
+            int index =  tbl.getSelectedRow();
+            int indice = Integer.parseInt(tbl.getValueAt(index, 0).toString());
+            Query query = new Query();
+            try{
+                query.delete("guia", "idGuia = "+indice );
+
+            }
+            catch(Exception e){
+                JOptionPane.showMessageDialog(null,"Error al Eliminar","",2);
+            }
+            reset();
         }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(null,"Error al Eliminar","",2);
-        }
-        reset();
                 
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void txtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTelefonoActionPerformed
     public void reset(){
         this.dispose();
         frmMantenedorG mantenedor = new frmMantenedorG();
@@ -374,6 +421,7 @@ public class frmMantenedorG extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblSub;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JTable tbl;
     private javax.swing.JTextField txtNombre;
