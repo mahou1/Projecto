@@ -25,28 +25,13 @@ public class frmMantenedorS extends javax.swing.JFrame {
         initComponents();
         setSesion();
         lblTitulo.setText("Sesiones");
-        cargarDatos();
-    }
-    
-    public void cargarDatos(){
-        Query q = new Query();
-        try{
-            ResultSet  lista;
-            lista= q.select("*", "guia", "");
-            while(lista.next()){
-                cmbGuia.addItem(lista.getString("nombre"));
-                cmbGuia.setActionCommand(lista.getString("idGuia"));
-            }
-            lista=q.select("idTour,nombre","tour", "");
-            while(lista.next()){
-                cmbTour.addItem(lista.getString("nombre"));
-                cmbTour.setActionCommand(lista.getString("idTour"));
-            }
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null,"Error "+e,"",2);
-        }
         
+        cmbIdTour.setVisible(false);
+        cmbIdGuia.setVisible(false);
+        cmbTour.setSelectedIndex(-1);
+        cmbGuia.setSelectedIndex(-1);
     }
+   
     public void setSesion(){
         String[] columnas = {"nombre","fecha","precio","disponibilad"};
         DefaultTableModel model =  new DefaultTableModel(null,columnas);
@@ -55,6 +40,20 @@ public class frmMantenedorS extends javax.swing.JFrame {
             ResultSet lista= q.select("*","sesion"," INNER JOIN tour ON sesion.idTour= tour.idTour");
             while(lista.next()){
                 model.addRow(new Object[]{lista.getString("nombre"),lista.getString("fecha"),lista.getString("precio"),lista.getString("disponibilidad")});
+            }
+            try{
+                lista= q.select("*", "guia", "");
+                 while(lista.next()){
+                    cmbGuia.addItem(lista.getString("nombre"));
+                  cmbIdGuia.addItem(lista.getString("idGuia"));
+                }
+                lista=q.select("idTour,nombre","tour", "");
+                while(lista.next()){
+                    cmbTour.addItem(lista.getString("nombre"));
+                    cmbIdTour.addItem(lista.getString("idTour"));
+                }
+            }catch(SQLException e){
+                    JOptionPane.showMessageDialog(null,"Error "+e,"",2);
             }
             q.cerrar();
         }catch(SQLException e){
@@ -95,6 +94,8 @@ public class frmMantenedorS extends javax.swing.JFrame {
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         txtFecha = new javax.swing.JTextField();
+        cmbIdTour = new javax.swing.JComboBox<>();
+        cmbIdGuia = new javax.swing.JComboBox<>();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -142,12 +143,18 @@ public class frmMantenedorS extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(tbl);
 
         lblDetalle.setText("Detalle Sesion");
 
         lblTour.setText("Tour:");
 
+        cmbTour.setToolTipText("Selecione un Tour");
         cmbTour.setEnabled(false);
         cmbTour.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -198,6 +205,16 @@ public class frmMantenedorS extends javax.swing.JFrame {
             }
         });
 
+        cmbIdTour.setEnabled(false);
+        cmbIdTour.setFocusable(false);
+        cmbIdTour.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbIdTourActionPerformed(evt);
+            }
+        });
+
+        cmbIdGuia.setEnabled(false);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -224,12 +241,20 @@ public class frmMantenedorS extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(lblTour)
                         .addGap(18, 18, 18)
-                        .addComponent(cmbTour, 0, 161, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
+                        .addComponent(cmbTour, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAceptar)
-                    .addComponent(btnCancelar))
-                .addGap(65, 65, 65))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAceptar)
+                            .addComponent(btnCancelar))
+                        .addGap(65, 65, 65))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cmbIdTour, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cmbIdGuia, 0, 31, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -239,7 +264,9 @@ public class frmMantenedorS extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblTour)
-                    .addComponent(cmbTour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cmbTour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmbIdTour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -252,7 +279,8 @@ public class frmMantenedorS extends javax.swing.JFrame {
                         .addGap(14, 14, 14)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(cmbGuia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbGuia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbIdGuia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(27, 27, 27)
@@ -361,7 +389,26 @@ public class frmMantenedorS extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDisponibilidadActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        // TODO add your handling code here:
+        Query q = new Query();
+        String tour,fecha,disponibilidad,guia;
+        tour = cmbIdTour.getItemAt(cmbTour.getSelectedIndex());
+        guia = cmbIdGuia.getItemAt(cmbGuia.getSelectedIndex());
+        fecha = txtFecha.getText();
+        disponibilidad = txtDisponibilidad.getText();
+        if(lblDetalle.getText().equals("Agregar Sesion")){
+           try{
+                q.insert("sesion(`idTour`, `fecha`, `disponibilidad`, `idGuia`)",tour+",'"+fecha+"',"+disponibilidad+","+guia);
+                JOptionPane.showMessageDialog(null,"Agregado exitosamente","",2);
+           }catch(Exception e){
+               JOptionPane.showMessageDialog(null,"No se pudo actualizar"+e,"",2);
+           }    
+        }
+        q.cerrar();
+        frmMantenedorS sesion = new frmMantenedorS();
+        this.dispose();
+        sesion.pack();
+        sesion.setVisible(true);
+        
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -379,6 +426,47 @@ public class frmMantenedorS extends javax.swing.JFrame {
     private void cmbTourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTourActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbTourActionPerformed
+
+    private void cmbIdTourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbIdTourActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbIdTourActionPerformed
+
+    private void tblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMouseClicked
+        int index,idTour=0;
+        index= tbl.getSelectedRow();
+        String tour="",fecha="" ,guia="",disponibilidad="";
+        tour = tbl.getValueAt(index,0).toString();
+        fecha = tbl.getValueAt(index, 1).toString();
+        disponibilidad =tbl.getValueAt(index, 3).toString();
+        Query q = new Query();
+        ResultSet lista;
+        for(int i = 0 ; i< cmbTour.getItemCount();i++){
+            if(cmbTour.getItemAt(i).equals(tour)){
+                idTour = Integer.parseInt(cmbIdTour.getItemAt(i));
+            }
+        }
+        try{
+            lista = q.select("*", "sesion", " INNER JOIN guia ON sesion.idGuia=guia.idGuia WHERE fecha='"+fecha+"' AND idTour="+idTour);
+            if(lista.next()){
+                guia = lista.getString("nombre");
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e, "", 2);
+        }   
+        for(int i = 0 ; i< cmbTour.getItemCount();i++){
+            if(cmbTour.getItemAt(i).equals(tour)){
+                cmbTour.setSelectedIndex(i);
+            }
+        }
+        for(int i = 0 ; i< cmbGuia.getItemCount();i++){
+            if(cmbGuia.getItemAt(i).equals(guia)){
+                cmbGuia.setSelectedIndex(i);
+            }
+        }
+        txtFecha.setText(fecha);
+        txtDisponibilidad.setText(disponibilidad);
+      
+    }//GEN-LAST:event_tblMouseClicked
 
     /**
      * @param args the command line arguments
@@ -426,6 +514,8 @@ public class frmMantenedorS extends javax.swing.JFrame {
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnVolver;
     private javax.swing.JComboBox<String> cmbGuia;
+    private javax.swing.JComboBox<String> cmbIdGuia;
+    private javax.swing.JComboBox<String> cmbIdTour;
     private javax.swing.JComboBox<String> cmbTour;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
