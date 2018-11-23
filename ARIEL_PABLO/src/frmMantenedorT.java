@@ -1,4 +1,4 @@
-//a
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JLabel;
@@ -115,6 +115,11 @@ public class frmMantenedorT extends javax.swing.JFrame {
         });
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnDetalle.setText("Detalle");
         btnDetalle.addActionListener(new java.awt.event.ActionListener() {
@@ -307,9 +312,8 @@ public class frmMantenedorT extends javax.swing.JFrame {
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnEliminar)
-                        .addComponent(btnDetalle))
+                    .addComponent(btnEliminar)
+                    .addComponent(btnDetalle)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnAgregar)
                         .addComponent(btnModificar)))
@@ -345,11 +349,13 @@ public class frmMantenedorT extends javax.swing.JFrame {
         lblDetalle.setText("Agregar Tour");
         btnCancelar.setEnabled(true);
         btnAceptar.setEnabled(true);
+        btnEliminar.setEnabled(false);
         txtDescripcion.setEnabled(true);
         txtDuracion.setEnabled(true);
         txtNombre.setEnabled(true);
         txtPrecio.setEnabled(true);
         txtUbicacion.setEnabled(true);
+        btnModificar.setEnabled(false);
         txtDescripcion.setText("");
         txtDuracion.setText("");
         txtNombre.setText("");
@@ -366,7 +372,6 @@ public class frmMantenedorT extends javax.swing.JFrame {
         String nom,descrip,duracion,ubicacion;
         int precio;
         int index = tbl.getSelectedRow();
-        int id = Integer.parseInt(tbl.getValueAt(index, 0).toString());
         precio = Integer.parseInt(txtPrecio.getText());
         ubicacion = txtUbicacion.getText();
         nom = txtNombre.getText();
@@ -386,6 +391,8 @@ public class frmMantenedorT extends javax.swing.JFrame {
 
         }else{
            if(lblDetalle.getText().equals("Modificar Tour")){
+                int id = Integer.parseInt(tbl.getValueAt(index,0).toString());
+
                 try{
                     String valores = "nombre='"+nom+"',descripcion='"+descrip+"',precio="+precio+",duracion='"+duracion+"',ubicacion="+ubicacion;
                     query.update("tour",valores," WHERE idTour="+id);
@@ -394,6 +401,28 @@ public class frmMantenedorT extends javax.swing.JFrame {
                 catch(Exception e){
                     JOptionPane.showMessageDialog(null,"No se pueod agregar","",2);
             }
+          }else{
+               if(lblDetalle.getText().equals("Eliminar Tour")){
+                    int opc = JOptionPane.showConfirmDialog(null, "¿Desea eliminar "+nom+" ?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if(opc==0){
+                        int indice = Integer.parseInt(tbl.getValueAt(index, 0).toString());
+                        try{
+                            query.delete("tour", "idTour="+tbl.getValueAt(tbl.getSelectedRow(),0));
+                         
+                        }catch(Exception ee){
+                        
+                        }
+                        try{
+                            query.update("tour", "deleted_at = CURRENT_TIMESTAMP", " WHERE idTour="+tbl.getValueAt(tbl.getSelectedRow(), 0));
+                        }
+                        catch(Exception e){
+                           
+                                          
+                        }
+                        
+                    }
+                   
+               }
           }
         
         }
@@ -446,9 +475,22 @@ public class frmMantenedorT extends javax.swing.JFrame {
             txtNombre.setEnabled(true);
             txtPrecio.setEnabled(true);
             txtUbicacion.setEnabled(true);
+            btnAgregar.setEnabled(false);
+            btnEliminar.setEnabled(false);
         };
         
     }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        int e = tbl.getSelectedRow();
+        if(e!=-1){
+        btnAgregar.setEnabled(false);
+        btnModificar.setEnabled(false);
+        lblDetalle.setText("Eliminar Tour");
+        btnAceptar.setEnabled(true);
+        btnCancelar.setEnabled(true);
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
    
     /**
      * @param args the command line arguments

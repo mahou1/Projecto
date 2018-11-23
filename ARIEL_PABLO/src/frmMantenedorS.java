@@ -25,7 +25,6 @@ public class frmMantenedorS extends javax.swing.JFrame {
         initComponents();
         setSesion();
         lblTitulo.setText("Sesiones");
-        
         cmbIdTour.setVisible(false);
         cmbIdGuia.setVisible(false);
         cmbTour.setSelectedIndex(-1);
@@ -44,7 +43,7 @@ public class frmMantenedorS extends javax.swing.JFrame {
             try{
                 lista= q.select("*", "guia", "");
                  while(lista.next()){
-                    cmbGuia.addItem(lista.getString("nombre"));
+                  cmbGuia.addItem(lista.getString("nombre"));
                   cmbIdGuia.addItem(lista.getString("idGuia"));
                 }
                 lista=q.select("idTour,nombre","tour", "");
@@ -122,6 +121,11 @@ public class frmMantenedorS extends javax.swing.JFrame {
         });
 
         btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setText("Eliminar");
 
@@ -378,6 +382,8 @@ public class frmMantenedorS extends javax.swing.JFrame {
         cmbTour.setSelectedIndex(-1);
         cmbGuia.setSelectedIndex(-1);
         lblDetalle.setText("Agregar Sesion");
+        btnModificar.setEnabled(false);
+        btnEliminar.setEnabled(false);
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void cmbGuiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbGuiaActionPerformed
@@ -390,18 +396,34 @@ public class frmMantenedorS extends javax.swing.JFrame {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         Query q = new Query();
-        String tour,fecha,disponibilidad,guia;
-        tour = cmbIdTour.getItemAt(cmbTour.getSelectedIndex());
+        String antiguoTour ="",nuevoTour,nuevaFecha,antiguaFecha="",disponibilidad,guia;
+       
+        for(int i = 0 ; i< cmbTour.getItemCount();i++){
+            if(cmbTour.getItemAt(i).equals(tbl.getValueAt(tbl.getSelectedRow(), 0))){
+                antiguoTour = cmbIdTour.getItemAt(i);
+            }
+        }
+        antiguaFecha = tbl.getValueAt(tbl.getSelectedRow(),1).toString();
+        nuevoTour = cmbIdTour.getItemAt(cmbTour.getSelectedIndex());
         guia = cmbIdGuia.getItemAt(cmbGuia.getSelectedIndex());
-        fecha = txtFecha.getText();
+        nuevaFecha = txtFecha.getText();
         disponibilidad = txtDisponibilidad.getText();
         if(lblDetalle.getText().equals("Agregar Sesion")){
            try{
-                q.insert("sesion(`idTour`, `fecha`, `disponibilidad`, `idGuia`)",tour+",'"+fecha+"',"+disponibilidad+","+guia);
+                q.insert("sesion(`idTour`, `fecha`, `disponibilidad`, `idGuia`)",nuevoTour+",'"+nuevaFecha+"',"+disponibilidad+","+guia);
                 JOptionPane.showMessageDialog(null,"Agregado exitosamente","",2);
            }catch(Exception e){
                JOptionPane.showMessageDialog(null,"No se pudo actualizar"+e,"",2);
            }    
+        }else{
+            if(lblDetalle.getText().equals("Modificar Tour")){
+                try{
+                    String valores = "idTour="+nuevoTour+",idGuia="+guia+",fecha='"+nuevaFecha+"',disponibilidad="+disponibilidad;
+                    q.update("sesion",valores," WHERE idTour="+antiguoTour+" AND fecha='"+antiguaFecha+"'");
+                }catch(Exception e){
+                      JOptionPane.showMessageDialog(null,"No se pudo actualizar"+e,"",2);
+                }
+            }
         }
         q.cerrar();
         frmMantenedorS sesion = new frmMantenedorS();
@@ -467,6 +489,21 @@ public class frmMantenedorS extends javax.swing.JFrame {
         txtDisponibilidad.setText(disponibilidad);
       
     }//GEN-LAST:event_tblMouseClicked
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        int e = tbl.getSelectedRow();
+        if(e!=-1){
+            lblDetalle.setText("Modificar Tour");
+            btnCancelar.setEnabled(true);
+            btnAceptar.setEnabled(true);
+            cmbTour.setEnabled(true);
+            cmbGuia.setEnabled(true);
+            txtFecha.setEnabled(true);
+            txtDisponibilidad.setEnabled(true);
+            btnAgregar.setEnabled(false);
+            btnEliminar.setEnabled(false);
+        };       
+    }//GEN-LAST:event_btnModificarActionPerformed
 
     /**
      * @param args the command line arguments

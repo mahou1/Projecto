@@ -55,6 +55,7 @@ public class Query {
     public void update(String tabla,String data,String condicion){
         try{
             sentencia.executeUpdate("UPDATE  "+tabla+" SET "+data+condicion);
+              JOptionPane.showMessageDialog(null,"UPDATE  "+tabla+" SET "+data+condicion,"",2);
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null,e,"",2);
         }
@@ -73,7 +74,6 @@ public class Query {
         }catch(Exception e){
             JOptionPane.showMessageDialog(null,e,"",2);
         }
-    
         sentencia=null;
     }
     
