@@ -30,13 +30,19 @@ public class frmMantenedorT extends javax.swing.JFrame {
     
     public void setTour(){
         lblTitulo.setText("Tours");
-        String[] columnas = {"id","nombre","precio","duracion"};
+        String[] columnas = {"id","nombre","precio","duracion","Activo"};
         DefaultTableModel model =  new DefaultTableModel(null,columnas);
         Query q = new Query();
         try{
             ResultSet lista= q.select("*","tour","");
             while(lista.next()){
-                model.addRow(new Object[]{lista.getString("idTour"),lista.getString("nombre"),lista.getString("precio"),lista.getString("duracion")});
+                String activo="";
+                if(lista.getString("deleted_at")== null){
+                    activo="S";
+                }else{
+                    activo="N";
+                }
+                model.addRow(new Object[]{lista.getString("idTour"),lista.getString("nombre"),lista.getString("precio"),lista.getString("duracion"),activo});
             }
             q.cerrar();
         }catch(SQLException e){
@@ -82,6 +88,8 @@ public class frmMantenedorT extends javax.swing.JFrame {
         lblNombre4 = new javax.swing.JLabel();
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        lblActivo = new javax.swing.JLabel();
+        cmbActivo = new javax.swing.JComboBox<>();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -197,6 +205,17 @@ public class frmMantenedorT extends javax.swing.JFrame {
             }
         });
 
+        lblActivo.setText("Activo:");
+
+        cmbActivo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "S", "N" }));
+        cmbActivo.setSelectedIndex(-1);
+        cmbActivo.setEnabled(false);
+        cmbActivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbActivoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlDetalleLayout = new javax.swing.GroupLayout(pnlDetalle);
         pnlDetalle.setLayout(pnlDetalleLayout);
         pnlDetalleLayout.setHorizontalGroup(
@@ -204,15 +223,6 @@ public class frmMantenedorT extends javax.swing.JFrame {
             .addGroup(pnlDetalleLayout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlDetalleLayout.createSequentialGroup()
-                        .addComponent(lblNombre1)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblNombre2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(112, 112, 112))
                     .addGroup(pnlDetalleLayout.createSequentialGroup()
                         .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblNombre4)
@@ -227,7 +237,22 @@ public class frmMantenedorT extends javax.swing.JFrame {
                         .addComponent(lblNombre)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDetalleLayout.createSequentialGroup()
+                        .addComponent(lblNombre1)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlDetalleLayout.createSequentialGroup()
+                                .addComponent(lblActivo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cmbActivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlDetalleLayout.createSequentialGroup()
+                                .addComponent(lblNombre2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(112, 112, 112))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDetalleLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -256,17 +281,22 @@ public class frmMantenedorT extends javax.swing.JFrame {
                     .addComponent(lblNombre2)
                     .addComponent(txtDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNombre3)
-                    .addComponent(txtUbicacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNombre4))
-                .addGap(18, 18, 18)
-                .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAceptar)
-                    .addComponent(btnCancelar))
+                    .addGroup(pnlDetalleLayout.createSequentialGroup()
+                        .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(lblNombre3)
+                                .addComponent(txtUbicacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblActivo))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNombre4))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnAceptar)
+                            .addComponent(btnCancelar)))
+                    .addComponent(cmbActivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -355,6 +385,8 @@ public class frmMantenedorT extends javax.swing.JFrame {
         txtNombre.setEnabled(true);
         txtPrecio.setEnabled(true);
         txtUbicacion.setEnabled(true);
+        cmbActivo.setEnabled(true);
+        cmbActivo.setSelectedIndex(0);
         btnModificar.setEnabled(false);
         txtDescripcion.setText("");
         txtDuracion.setText("");
@@ -369,7 +401,7 @@ public class frmMantenedorT extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDetalleActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        String nom,descrip,duracion,ubicacion;
+        String nom,descrip,duracion,ubicacion,estado="";
         int precio;
         int index = tbl.getSelectedRow();
         precio = Integer.parseInt(txtPrecio.getText());
@@ -377,10 +409,15 @@ public class frmMantenedorT extends javax.swing.JFrame {
         nom = txtNombre.getText();
         descrip = txtDescripcion.getText();
         duracion = txtDuracion.getText();
+        if(cmbActivo.getSelectedItem().equals("S")){
+            estado = " = NULL";
+        }else{
+            estado = " = CURRENT_TIMESTAMP";
+        }
         Query query = new Query();
         if(lblDetalle.getText().equals("Agregar Tour")){ 
             try{
-                String valores = "null,'"+nom+"','"+descrip+"',"+precio+",'"+duracion+"',"+ubicacion;
+                String valores = "null,'"+nom+"','"+descrip+"',"+precio+",'"+duracion+"',"+ubicacion+",NULL";
                 query.insert("tour",valores);
                 JOptionPane.showMessageDialog(null,"Agregado exitosamente","",2);
             }
@@ -394,7 +431,7 @@ public class frmMantenedorT extends javax.swing.JFrame {
                 int id = Integer.parseInt(tbl.getValueAt(index,0).toString());
 
                 try{
-                    String valores = "nombre='"+nom+"',descripcion='"+descrip+"',precio="+precio+",duracion='"+duracion+"',ubicacion="+ubicacion;
+                    String valores = "nombre='"+nom+"',descripcion='"+descrip+"',precio="+precio+",duracion='"+duracion+"',ubicacion="+ubicacion+", deleted_at"+estado;
                     query.update("tour",valores," WHERE idTour="+id);
                     JOptionPane.showMessageDialog(null,"Actualizacion exitosa","",2);
                 }
@@ -410,16 +447,8 @@ public class frmMantenedorT extends javax.swing.JFrame {
                             query.delete("tour", "idTour="+tbl.getValueAt(tbl.getSelectedRow(),0));
                          
                         }catch(Exception ee){
-                        
-                        }
-                        try{
-                            query.update("tour", "deleted_at = CURRENT_TIMESTAMP", " WHERE idTour="+tbl.getValueAt(tbl.getSelectedRow(), 0));
-                        }
-                        catch(Exception e){
-                           
-                                          
-                        }
-                        
+                            JOptionPane.showMessageDialog(null,"No se pueod agregar","",2);
+                        }                        
                     }
                    
                }
@@ -453,6 +482,11 @@ public class frmMantenedorT extends javax.swing.JFrame {
                  txtNombre.setText(item.getString("nombre"));
                  txtPrecio.setText(item.getString("precio"));
                  txtUbicacion.setText(item.getString("ubicacion"));
+                 for(int i=0;i<cmbActivo.getItemCount();i++){
+                     if(tbl.getValueAt(tbl.getSelectedRow(), 4).equals(cmbActivo.getItemAt(i))){
+                         cmbActivo.setSelectedIndex(i);
+                     }
+                 }
             }
             
             q.cerrar();
@@ -475,6 +509,7 @@ public class frmMantenedorT extends javax.swing.JFrame {
             txtNombre.setEnabled(true);
             txtPrecio.setEnabled(true);
             txtUbicacion.setEnabled(true);
+            cmbActivo.setEnabled(true);
             btnAgregar.setEnabled(false);
             btnEliminar.setEnabled(false);
         };
@@ -489,8 +524,13 @@ public class frmMantenedorT extends javax.swing.JFrame {
         lblDetalle.setText("Eliminar Tour");
         btnAceptar.setEnabled(true);
         btnCancelar.setEnabled(true);
+        
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void cmbActivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbActivoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbActivoActionPerformed
    
     /**
      * @param args the command line arguments
@@ -538,11 +578,13 @@ public class frmMantenedorT extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnVolver;
+    private javax.swing.JComboBox<String> cmbActivo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblActivo;
     private javax.swing.JLabel lblDetalle;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblNombre1;

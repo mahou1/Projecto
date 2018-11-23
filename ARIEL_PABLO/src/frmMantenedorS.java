@@ -36,17 +36,18 @@ public class frmMantenedorS extends javax.swing.JFrame {
         DefaultTableModel model =  new DefaultTableModel(null,columnas);
         Query q = new Query();
         try{
-            ResultSet lista= q.select("*","sesion"," INNER JOIN tour ON sesion.idTour= tour.idTour");
+            ResultSet lista= q.select("*","tour"," INNER JOIN sesion ON sesion.idTour= tour.idTour INNER JOIN guia ON guia.idGuia = sesion.idGuia"
+                    + " WHERE sesion.deleted_at is Null  AND tour.deleted_at is NULL AND guia.deleted_at is NULL");
             while(lista.next()){
-                model.addRow(new Object[]{lista.getString("nombre"),lista.getString("fecha"),lista.getString("precio"),lista.getString("disponibilidad")});
+                model.addRow(new Object[]{lista.getString("tour.nombre"),lista.getString("fecha"),lista.getString("precio"),lista.getString("disponibilidad")});
             }
             try{
-                lista= q.select("*", "guia", "");
+                lista= q.select("*", "guia", " WHERE guia.deleted_at is Null");
                  while(lista.next()){
                   cmbGuia.addItem(lista.getString("nombre"));
                   cmbIdGuia.addItem(lista.getString("idGuia"));
                 }
-                lista=q.select("idTour,nombre","tour", "");
+                lista=q.select("idTour,nombre","tour", " WHERE tour.deleted_at is Null");
                 while(lista.next()){
                     cmbTour.addItem(lista.getString("nombre"));
                     cmbIdTour.addItem(lista.getString("idTour"));

@@ -38,7 +38,11 @@ public class Query {
         try{
             sentencia.executeUpdate("DELETE FROM "+tabla+" WHERE "+condicion);
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(null,e,"",2);
+             try{
+                update(tabla, "deleted_at = CURRENT_TIMESTAMP", " WHERE "+condicion);
+             }catch(Exception ee){
+                System.out.println("Error en la conexion"+e);               
+            }
         }
     }
     
@@ -55,7 +59,6 @@ public class Query {
     public void update(String tabla,String data,String condicion){
         try{
             sentencia.executeUpdate("UPDATE  "+tabla+" SET "+data+condicion);
-              JOptionPane.showMessageDialog(null,"UPDATE  "+tabla+" SET "+data+condicion,"",2);
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null,e,"",2);
         }
