@@ -1,6 +1,9 @@
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -43,9 +46,11 @@ public class frmMantenedorG extends javax.swing.JFrame {
         lblTitulo.setText("Guías");
         String[] columnas = {"id","nombre","telefono"};
         DefaultTableModel model =  new DefaultTableModel(null,columnas);
+        
         Query q = new Query();
         try{
-            ResultSet lista= q.select("*","guia","");
+            String condicion = " WHERE deleted_at is NULL";
+            ResultSet lista= q.select("*","guia",condicion);
             while(lista.next()){
                 model.addRow(new Object[]{lista.getString("idGuia"),lista.getString("nombre"),lista.getString("telefono")});
             }
@@ -55,6 +60,7 @@ public class frmMantenedorG extends javax.swing.JFrame {
         }
         
         tbl.setModel(model);
+        
         
         
     }
@@ -274,6 +280,10 @@ public class frmMantenedorG extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         desactivarAgregar();
+        btnModificar.setEnabled(true);
+        btnAgregar.setEnabled(true);
+        btnEliminar.setEnabled(true);
+        lblSub.setText("");
         txtNombre.setText("");
         txtTelefono.setText("");
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -284,9 +294,8 @@ public class frmMantenedorG extends javax.swing.JFrame {
         telefono = txtTelefono.getText();
         Query query = new Query();
         if(lblSub.getText().equals("Agregar")){
-            String valores = "null,'"+nom+"','"+telefono+"'";
-            query.insert("guia",valores);
-            JOptionPane.showMessageDialog(null,"Agregado exitosamente","",2); 
+            String valores = "null,'"+nom+"','"+telefono+"', null";
+            query.insert("guia",valores); 
         }else{
             if(lblSub.getText().equals("Modificar")){
                 int index =  tbl.getSelectedRow();
@@ -316,9 +325,12 @@ public class frmMantenedorG extends javax.swing.JFrame {
         menu.pack();
         menu.setVisible(true);
     }//GEN-LAST:event_btnVolverActionPerformed
-
+ 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        tbl.clearSelection(); 
         activarAgregar();
+        btnModificar.setEnabled(false);
+        btnEliminar.setEnabled(false);
         txtNombre.setText("");
         txtTelefono.setText("");
         lblSub.setText("Agregar");
@@ -337,29 +349,41 @@ public class frmMantenedorG extends javax.swing.JFrame {
     }//GEN-LAST:event_tblMouseClicked
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        if(tbl.getSelectedRow()==-1){
+        if(tbl.getSelectedRow()!=-1){
+            btnAgregar.setEnabled(false);
+            btnEliminar.setEnabled(false);
             activarAgregar();
             lblSub.setText("Modificar");        
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        String nom = txtNombre.getText();
-        int opc = JOptionPane.showConfirmDialog(null, "¿Desea eliminar "+nom+" ?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if(opc==0){
-            int index =  tbl.getSelectedRow();
-            int indice = Integer.parseInt(tbl.getValueAt(index, 0).toString());
-            Query query = new Query();
-            try{
-                query.delete("guia", "idGuia = "+indice );
+        if(tbl.getSelectedRow() != -1){   
+            String nom = txtNombre.getText();
+            int opc = JOptionPane.showConfirmDialog(null, "¿Desea eliminar "+nom+" ?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(opc==0){
+                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+                int indexTabla =  tbl.getSelectedRow();
+                int indice = Integer.parseInt(tbl.getValueAt(indexTabla, 0).toString());
+                Query query = new Query();
+                try{
+                    String time = (timestamp).toString();
+                    time = time.substring(0,19);
+                    String valor = "deleted_at = '"+time+"'";
+                    
+                    String cond = " WHERE idGuia = "+ indice;
+                    query.update("guia", valor, cond);
+             
+                     //sentencia.executeUpdate("UPDATE  "+tabla+" SET "+data+condicion);
+                    
 
+                }
+                catch(Exception e){
+                    JOptionPane.showMessageDialog(null,"Error al Eliminar","",2);
+                }
+                reset();
             }
-            catch(Exception e){
-                JOptionPane.showMessageDialog(null,"Error al Eliminar","",2);
-            }
-            reset();
-        }
-                
+        }     
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void txtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoActionPerformed
