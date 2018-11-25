@@ -43,7 +43,6 @@ public class frmMantenedorG extends javax.swing.JFrame {
     }
   
     public void setGuia(){
-        lblTitulo.setText("Guías");
         String[] columnas = {"id","nombre","telefono"};
         DefaultTableModel model =  new DefaultTableModel(null,columnas);
         
@@ -116,6 +115,7 @@ public class frmMantenedorG extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        lblTitulo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblTitulo.setText("Mantenedor Guía");
 
         btnAceptar.setText("Aceptar");
@@ -188,6 +188,7 @@ public class frmMantenedorG extends javax.swing.JFrame {
             }
         });
 
+        lblSub.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblSub.setText("Detalles ");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -229,10 +230,10 @@ public class frmMantenedorG extends javax.swing.JFrame {
                         .addComponent(btnVolver)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(36, 36, 36))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(169, 169, 169)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(lblTitulo)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(126, 126, 126))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -261,7 +262,7 @@ public class frmMantenedorG extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
                     .addComponent(btnAceptar))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -303,9 +304,6 @@ public class frmMantenedorG extends javax.swing.JFrame {
                 String valor = "nombre = '"+ nom+"', telefono = '"+telefono+"'" ;
                 String cond = " WHERE idGuia = "+ indice;
                 query.update("guia", valor, cond);
-            
-                        //String tabla,String data,String condicion){
-                        //"UPDATE  "+tabla+" SET "+data+condicion
             }
         }
         
@@ -313,10 +311,7 @@ public class frmMantenedorG extends javax.swing.JFrame {
         txtNombre.setText("");
         txtTelefono.setText("");
         
-        reset();
-        
-      
-        
+        reset();       
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
@@ -338,6 +333,10 @@ public class frmMantenedorG extends javax.swing.JFrame {
 
     private void tblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMouseClicked
         // Obtenemos el primer dato del renglon seleccionado
+        setText();
+    
+    }//GEN-LAST:event_tblMouseClicked
+    public void setText(){
         int index =  tbl.getSelectedRow();
         String id = tbl.getValueAt(index, 0).toString();
         String nombre = tbl.getValueAt(index,1).toString();
@@ -345,15 +344,15 @@ public class frmMantenedorG extends javax.swing.JFrame {
              
         txtNombre.setText(nombre);
         txtTelefono.setText(telefono);
+    }
     
-    }//GEN-LAST:event_tblMouseClicked
-
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         if(tbl.getSelectedRow()!=-1){
             btnAgregar.setEnabled(false);
             btnEliminar.setEnabled(false);
             activarAgregar();
-            lblSub.setText("Modificar");        
+            lblSub.setText("Modificar");  
+            setText(); 
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
