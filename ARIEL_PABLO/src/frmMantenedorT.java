@@ -1,6 +1,7 @@
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -34,7 +35,8 @@ public class frmMantenedorT extends javax.swing.JFrame {
         DefaultTableModel model =  new DefaultTableModel(null,columnas);
         Query q = new Query();
         try{
-            ResultSet lista= q.select("*","tour","");
+            String condicion = " WHERE deleted_at is NULL";
+            ResultSet lista= q.select("*","tour",condicion);
             while(lista.next()){
                 String activo="";
                 if(lista.getString("deleted_at")== null){
@@ -69,7 +71,6 @@ public class frmMantenedorT extends javax.swing.JFrame {
         btnAgregar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        btnDetalle = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         tbl = new javax.swing.JTable();
@@ -124,6 +125,7 @@ public class frmMantenedorT extends javax.swing.JFrame {
 
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+<<<<<<< HEAD
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
             }
@@ -131,8 +133,10 @@ public class frmMantenedorT extends javax.swing.JFrame {
 
         btnDetalle.setText("Detalle");
         btnDetalle.addActionListener(new java.awt.event.ActionListener() {
+=======
+>>>>>>> pablo
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDetalleActionPerformed(evt);
+                btnEliminarActionPerformed(evt);
             }
         });
 
@@ -163,31 +167,55 @@ public class frmMantenedorT extends javax.swing.JFrame {
 
         pnlDetalle.setEnabled(false);
         pnlDetalle.setFocusCycleRoot(true);
+        pnlDetalle.setLayout(null);
 
         lblDetalle.setText("Detalle Tour");
+        pnlDetalle.add(lblDetalle);
+        lblDetalle.setBounds(210, 10, 130, 14);
 
         lblNombre.setText("Nombre :");
+        pnlDetalle.add(lblNombre);
+        lblNombre.setBounds(40, 40, 60, 14);
 
         txtNombre.setEnabled(false);
+        pnlDetalle.add(txtNombre);
+        txtNombre.setBounds(110, 30, 340, 30);
 
         lblNombre1.setText("Precio :");
+        pnlDetalle.add(lblNombre1);
+        lblNombre1.setBounds(40, 70, 60, 14);
 
         txtPrecio.setEnabled(false);
+        pnlDetalle.add(txtPrecio);
+        txtPrecio.setBounds(110, 70, 97, 30);
 
         lblNombre2.setText("Duración :");
+        pnlDetalle.add(lblNombre2);
+        lblNombre2.setBounds(260, 80, 80, 14);
 
         txtDuracion.setEnabled(false);
+        pnlDetalle.add(txtDuracion);
+        txtDuracion.setBounds(350, 70, 97, 30);
 
         txtDescripcion.setColumns(20);
         txtDescripcion.setRows(5);
         txtDescripcion.setEnabled(false);
         jScrollPane1.setViewportView(txtDescripcion);
 
+        pnlDetalle.add(jScrollPane1);
+        jScrollPane1.setBounds(130, 150, 343, 96);
+
         lblNombre3.setText("Ubicación :");
+        pnlDetalle.add(lblNombre3);
+        lblNombre3.setBounds(40, 110, 70, 14);
 
         txtUbicacion.setEnabled(false);
+        pnlDetalle.add(txtUbicacion);
+        txtUbicacion.setBounds(110, 110, 97, 30);
 
         lblNombre4.setText("Descripción :");
+        pnlDetalle.add(lblNombre4);
+        lblNombre4.setBounds(40, 150, 90, 14);
 
         btnAceptar.setText("Aceptar");
         btnAceptar.setEnabled(false);
@@ -196,6 +224,8 @@ public class frmMantenedorT extends javax.swing.JFrame {
                 btnAceptarActionPerformed(evt);
             }
         });
+        pnlDetalle.add(btnAceptar);
+        btnAceptar.setBounds(330, 260, 71, 23);
 
         btnCancelar.setText("Cancelar");
         btnCancelar.setEnabled(false);
@@ -204,6 +234,7 @@ public class frmMantenedorT extends javax.swing.JFrame {
                 btnCancelarActionPerformed(evt);
             }
         });
+<<<<<<< HEAD
 
         lblActivo.setText("Activo:");
 
@@ -299,66 +330,65 @@ public class frmMantenedorT extends javax.swing.JFrame {
                     .addComponent(cmbActivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+=======
+        pnlDetalle.add(btnCancelar);
+        btnCancelar.setBounds(410, 260, 80, 23);
+>>>>>>> pablo
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(pnlDetalle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGap(65, 65, 65)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 13, Short.MAX_VALUE)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(76, 76, 76)
                                 .addComponent(btnAgregar)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnModificar)
                                 .addGap(34, 34, 34)
                                 .addComponent(btnEliminar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                                .addComponent(btnDetalle))
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnVolver)))
+                                .addGap(35, 35, 35)
+                                .addComponent(btnVolver))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(218, 218, 218)
+                                .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(217, 217, 217)
-                .addComponent(lblTitulo)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(pnlDetalle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(93, 93, 93)
-                        .addComponent(btnVolver)
-                        .addGap(70, 70, 70))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblTitulo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
+                .addGap(26, 26, 26)
+                .addComponent(lblTitulo)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnEliminar)
+<<<<<<< HEAD
                     .addComponent(btnDetalle)
+=======
+>>>>>>> pablo
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnAgregar)
-                        .addComponent(btnModificar)))
-                .addGap(35, 35, 35)
-                .addComponent(pnlDetalle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                        .addComponent(btnModificar))
+                    .addComponent(btnVolver))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlDetalle, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 14, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -377,6 +407,8 @@ public class frmMantenedorT extends javax.swing.JFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         lblDetalle.setText("Agregar Tour");
+        btnModificar.setEnabled(false);
+        btnEliminar.setEnabled(false);
         btnCancelar.setEnabled(true);
         btnAceptar.setEnabled(true);
         btnEliminar.setEnabled(false);
@@ -396,14 +428,14 @@ public class frmMantenedorT extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnAgregarActionPerformed
 
-    private void btnDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetalleActionPerformed
-           
-    }//GEN-LAST:event_btnDetalleActionPerformed
-
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         String nom,descrip,duracion,ubicacion,estado="";
         int precio;
+<<<<<<< HEAD
         int index = tbl.getSelectedRow();
+=======
+        
+>>>>>>> pablo
         precio = Integer.parseInt(txtPrecio.getText());
         ubicacion = txtUbicacion.getText();
         nom = txtNombre.getText();
@@ -417,7 +449,11 @@ public class frmMantenedorT extends javax.swing.JFrame {
         Query query = new Query();
         if(lblDetalle.getText().equals("Agregar Tour")){ 
             try{
+<<<<<<< HEAD
                 String valores = "null,'"+nom+"','"+descrip+"',"+precio+",'"+duracion+"',"+ubicacion+",NULL";
+=======
+                String valores = "null,'"+nom+"','"+descrip+"','"+precio+"','"+duracion+"','"+ubicacion+"', null";
+>>>>>>> pablo
                 query.insert("tour",valores);
                 JOptionPane.showMessageDialog(null,"Agregado exitosamente","",2);
             }
@@ -428,15 +464,21 @@ public class frmMantenedorT extends javax.swing.JFrame {
 
         }else{
            if(lblDetalle.getText().equals("Modificar Tour")){
+<<<<<<< HEAD
                 int id = Integer.parseInt(tbl.getValueAt(index,0).toString());
 
                 try{
                     String valores = "nombre='"+nom+"',descripcion='"+descrip+"',precio="+precio+",duracion='"+duracion+"',ubicacion="+ubicacion+", deleted_at"+estado;
+=======
+                int index = tbl.getSelectedRow();
+                int id = Integer.parseInt(tbl.getValueAt(index, 0).toString());
+                try{
+                    String valores = "nombre='"+nom+"',descripcion='"+descrip+"',precio='"+precio+"',duracion='"+duracion+"',ubicacion='"+ubicacion+"'";
+>>>>>>> pablo
                     query.update("tour",valores," WHERE idTour="+id);
-                    JOptionPane.showMessageDialog(null,"Actualizacion exitosa","",2);
+                    
                 }
                 catch(Exception e){
-                    JOptionPane.showMessageDialog(null,"No se pueod agregar","",2);
             }
           }else{
                if(lblDetalle.getText().equals("Eliminar Tour")){
@@ -502,6 +544,8 @@ public class frmMantenedorT extends javax.swing.JFrame {
         int e = tbl.getSelectedRow();
         if(e!=-1){
             lblDetalle.setText("Modificar Tour");
+            btnAgregar.setEnabled(false);
+            btnEliminar.setEnabled(false);
             btnCancelar.setEnabled(true);
             btnAceptar.setEnabled(true);
             txtDescripcion.setEnabled(true);
@@ -517,6 +561,7 @@ public class frmMantenedorT extends javax.swing.JFrame {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+<<<<<<< HEAD
         int e = tbl.getSelectedRow();
         if(e!=-1){
         btnAgregar.setEnabled(false);
@@ -532,6 +577,38 @@ public class frmMantenedorT extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbActivoActionPerformed
    
+=======
+        if(tbl.getSelectedRow() != -1){   
+            String nom = txtNombre.getText();
+            int opc = JOptionPane.showConfirmDialog(null, "¿Desea eliminar "+nom+" ?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(opc==0){
+                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+                int indexTabla =  tbl.getSelectedRow();
+                int indice = Integer.parseInt(tbl.getValueAt(indexTabla, 0).toString());
+                Query query = new Query();
+                try{
+                    String time = (timestamp).toString();
+                    time = time.substring(0,19);
+                    String valor = "deleted_at = '"+time+"'";
+                    
+                    String cond = " WHERE idTour = "+ indice;
+                    query.update("tour", valor, cond);
+
+                }
+                catch(Exception e){
+                    JOptionPane.showMessageDialog(null,"Error al Eliminar","",2);
+                }
+                reset();
+            }
+        }     
+    }//GEN-LAST:event_btnEliminarActionPerformed
+    public void reset(){
+        this.dispose();
+        frmMantenedorT mantenedor = new frmMantenedorT();
+        mantenedor.pack();
+        mantenedor.setVisible(true);
+    }
+>>>>>>> pablo
     /**
      * @param args the command line arguments
      */
@@ -574,7 +651,6 @@ public class frmMantenedorT extends javax.swing.JFrame {
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnDetalle;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnVolver;

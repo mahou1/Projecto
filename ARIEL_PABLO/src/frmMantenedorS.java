@@ -1,6 +1,9 @@
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -36,18 +39,30 @@ public class frmMantenedorS extends javax.swing.JFrame {
         DefaultTableModel model =  new DefaultTableModel(null,columnas);
         Query q = new Query();
         try{
+<<<<<<< HEAD
             ResultSet lista= q.select("*","tour"," INNER JOIN sesion ON sesion.idTour= tour.idTour INNER JOIN guia ON guia.idGuia = sesion.idGuia"
                     + " WHERE sesion.deleted_at is Null  AND tour.deleted_at is NULL AND guia.deleted_at is NULL");
+=======
+            ResultSet lista= q.select("*","sesion"," INNER JOIN tour ON sesion.idTour= tour.idTour WHERE sesion.deleted_at is NULL");
+>>>>>>> pablo
             while(lista.next()){
                 model.addRow(new Object[]{lista.getString("tour.nombre"),lista.getString("fecha"),lista.getString("precio"),lista.getString("disponibilidad")});
             }
             try{
+<<<<<<< HEAD
                 lista= q.select("*", "guia", " WHERE guia.deleted_at is Null");
+=======
+                lista= q.select("*", "guia", " WHERE deleted_at is null");
+>>>>>>> pablo
                  while(lista.next()){
                   cmbGuia.addItem(lista.getString("nombre"));
                   cmbIdGuia.addItem(lista.getString("idGuia"));
                 }
+<<<<<<< HEAD
                 lista=q.select("idTour,nombre","tour", " WHERE tour.deleted_at is Null");
+=======
+                lista=q.select("idTour,nombre","tour", " WHERE deleted_at is null");
+>>>>>>> pablo
                 while(lista.next()){
                     cmbTour.addItem(lista.getString("nombre"));
                     cmbIdTour.addItem(lista.getString("idTour"));
@@ -129,6 +144,11 @@ public class frmMantenedorS extends javax.swing.JFrame {
         });
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnVolver.setText("Volver");
         btnVolver.addActionListener(new java.awt.event.ActionListener() {
@@ -155,9 +175,15 @@ public class frmMantenedorS extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(tbl);
 
+        jPanel2.setLayout(null);
+
         lblDetalle.setText("Detalle Sesion");
+        jPanel2.add(lblDetalle);
+        lblDetalle.setBounds(196, 11, 97, 14);
 
         lblTour.setText("Tour:");
+        jPanel2.add(lblTour);
+        lblTour.setBounds(20, 40, 40, 20);
 
         cmbTour.setToolTipText("Selecione un Tour");
         cmbTour.setEnabled(false);
@@ -166,8 +192,12 @@ public class frmMantenedorS extends javax.swing.JFrame {
                 cmbTourActionPerformed(evt);
             }
         });
+        jPanel2.add(cmbTour);
+        cmbTour.setBounds(90, 40, 170, 30);
 
         jLabel2.setText("Guia:");
+        jPanel2.add(jLabel2);
+        jLabel2.setBounds(20, 140, 40, 20);
 
         cmbGuia.setEnabled(false);
         cmbGuia.addActionListener(new java.awt.event.ActionListener() {
@@ -175,10 +205,16 @@ public class frmMantenedorS extends javax.swing.JFrame {
                 cmbGuiaActionPerformed(evt);
             }
         });
+        jPanel2.add(cmbGuia);
+        cmbGuia.setBounds(90, 140, 170, 30);
 
         jLabel3.setText("Fecha:");
+        jPanel2.add(jLabel3);
+        jLabel3.setBounds(20, 90, 50, 20);
 
         lblDisponibilidad.setText("Disponibilidad:");
+        jPanel2.add(lblDisponibilidad);
+        lblDisponibilidad.setBounds(280, 40, 90, 30);
 
         txtDisponibilidad.setEnabled(false);
         txtDisponibilidad.addActionListener(new java.awt.event.ActionListener() {
@@ -186,6 +222,8 @@ public class frmMantenedorS extends javax.swing.JFrame {
                 txtDisponibilidadActionPerformed(evt);
             }
         });
+        jPanel2.add(txtDisponibilidad);
+        txtDisponibilidad.setBounds(380, 40, 40, 30);
 
         btnAceptar.setText("Aceptar");
         btnAceptar.setEnabled(false);
@@ -194,6 +232,8 @@ public class frmMantenedorS extends javax.swing.JFrame {
                 btnAceptarActionPerformed(evt);
             }
         });
+        jPanel2.add(btnAceptar);
+        btnAceptar.setBounds(280, 210, 80, 23);
 
         btnCancelar.setText("Cancelar");
         btnCancelar.setEnabled(false);
@@ -202,6 +242,8 @@ public class frmMantenedorS extends javax.swing.JFrame {
                 btnCancelarActionPerformed(evt);
             }
         });
+        jPanel2.add(btnCancelar);
+        btnCancelar.setBounds(380, 210, 90, 23);
 
         txtFecha.setEnabled(false);
         txtFecha.addActionListener(new java.awt.event.ActionListener() {
@@ -209,6 +251,8 @@ public class frmMantenedorS extends javax.swing.JFrame {
                 txtFechaActionPerformed(evt);
             }
         });
+        jPanel2.add(txtFecha);
+        txtFecha.setBounds(90, 90, 130, 30);
 
         cmbIdTour.setEnabled(false);
         cmbIdTour.setFocusable(false);
@@ -217,148 +261,66 @@ public class frmMantenedorS extends javax.swing.JFrame {
                 cmbIdTourActionPerformed(evt);
             }
         });
+        jPanel2.add(cmbIdTour);
+        cmbIdTour.setBounds(270, 40, 30, 30);
 
         cmbIdGuia.setEnabled(false);
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblDetalle)
-                .addGap(235, 235, 235))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(43, 43, 43)
-                        .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lblDisponibilidad)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtDisponibilidad, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cmbGuia, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lblTour)
-                        .addGap(18, 18, 18)
-                        .addComponent(cmbTour, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnAceptar)
-                            .addComponent(btnCancelar))
-                        .addGap(65, 65, 65))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cmbIdTour, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cmbIdGuia, 0, 31, Short.MAX_VALUE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(lblDetalle)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTour)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cmbTour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(cmbIdTour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(27, 27, 27))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(btnAceptar)
-                        .addGap(14, 14, 14)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(cmbGuia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbIdGuia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblDisponibilidad)
-                            .addComponent(txtDisponibilidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                        .addComponent(btnCancelar)
-                        .addGap(41, 41, 41))))
-        );
+        jPanel2.add(cmbIdGuia);
+        cmbIdGuia.setBounds(270, 140, 30, 30);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGap(188, 188, 188)
-                        .addComponent(lblTitulo))
+                        .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGap(21, 21, 21)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 461, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnAgregar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnModificar)
-                                .addGap(35, 35, 35)
-                                .addComponent(btnEliminar)
-                                .addGap(35, 35, 35)
-                                .addComponent(btnVolver))
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(69, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap()))
+                                .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(36, 36, 36)
+                                .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(19, 19, 19)))))
+                .addContainerGap(25, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addContainerGap(25, Short.MAX_VALUE)
                 .addComponent(lblTitulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgregar)
                     .addComponent(btnModificar)
                     .addComponent(btnEliminar)
                     .addComponent(btnVolver))
-                .addContainerGap(289, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(236, 236, 236)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 13, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -372,12 +334,9 @@ public class frmMantenedorS extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        btnAceptar.setEnabled(true);
-        btnCancelar.setEnabled(true);
-        cmbGuia.setEnabled(true);
-        cmbTour.setEnabled(true);
-        txtFecha.setEnabled(true);
-        txtDisponibilidad.setEnabled(true);
+        controlDetalle(true);
+        btnModificar.setEnabled(false);
+        btnEliminar.setEnabled(false);
         txtDisponibilidad.setText("");
         txtFecha.setText("");
         cmbTour.setSelectedIndex(-1);
@@ -410,6 +369,7 @@ public class frmMantenedorS extends javax.swing.JFrame {
         nuevaFecha = txtFecha.getText();
         disponibilidad = txtDisponibilidad.getText();
         if(lblDetalle.getText().equals("Agregar Sesion")){
+<<<<<<< HEAD
            try{
                 q.insert("sesion(`idTour`, `fecha`, `disponibilidad`, `idGuia`)",nuevoTour+",'"+nuevaFecha+"',"+disponibilidad+","+guia);
                 JOptionPane.showMessageDialog(null,"Agregado exitosamente","",2);
@@ -423,6 +383,23 @@ public class frmMantenedorS extends javax.swing.JFrame {
                     q.update("sesion",valores," WHERE idTour="+antiguoTour+" AND fecha='"+antiguaFecha+"'");
                 }catch(Exception e){
                       JOptionPane.showMessageDialog(null,"No se pudo actualizar"+e,"",2);
+=======
+           try{     
+                q.insert("sesion(`idTour`, `fecha`, `disponibilidad`, `idGuia`)",tour+",'"+fecha+"',"+disponibilidad+","+guia);
+            }catch(Exception e){
+               JOptionPane.showMessageDialog(null,"No se pudo actualizar"+e,"",2);
+           }    
+        }else{
+            if(lblDetalle.getText().equals("Modificar sesion")){
+                int index = tbl.getSelectedRow();
+                String consultFecha = tbl.getValueAt(index,1).toString();    
+                try{
+                    String valores = "idTour='"+tour+"',fecha='"+fecha+"',disponibilidad='"+disponibilidad+"',idGuia='"+guia+"'";
+                    q.update("sesion",valores," WHERE idTour = "+ tour+" AND fecha ='"+consultFecha+"'");
+                }
+                catch(Exception e){
+                    
+>>>>>>> pablo
                 }
             }
         }
@@ -433,22 +410,6 @@ public class frmMantenedorS extends javax.swing.JFrame {
         sesion.setVisible(true);
         
     }//GEN-LAST:event_btnAceptarActionPerformed
-
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
-        frmMantenedorS sesion = new frmMantenedorS();
-        this.dispose();
-        sesion.pack();
-        sesion.setVisible(true);
-    }//GEN-LAST:event_btnCancelarActionPerformed
-
-    private void txtFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFechaActionPerformed
-
-    private void cmbTourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTourActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbTourActionPerformed
 
     private void cmbIdTourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbIdTourActionPerformed
         // TODO add your handling code here:
@@ -490,6 +451,63 @@ public class frmMantenedorS extends javax.swing.JFrame {
         txtDisponibilidad.setText(disponibilidad);
       
     }//GEN-LAST:event_tblMouseClicked
+    
+    public void controlDetalle(boolean a){
+        btnAceptar.setEnabled(a);
+        btnCancelar.setEnabled(a);
+        cmbGuia.setEnabled(a);
+        cmbTour.setEnabled(a);
+        txtFecha.setEnabled(a);
+        txtDisponibilidad.setEnabled(a);
+    }
+    public void reset(){
+       frmMantenedorS mantenedor = new frmMantenedorS();
+       this.dispose();
+       mantenedor.pack();
+       mantenedor.setVisible(true);
+    }
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        if(tbl.getSelectedRow()!=-1){
+            controlDetalle(true);
+            lblDetalle.setText("Modificar sesion");
+            btnAgregar.setEnabled(false);
+            btnEliminar.setEnabled(false);
+        }
+    }//GEN-LAST:event_btnModificarActionPerformed
+    
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+       reset();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFechaActionPerformed
+
+    private void cmbTourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTourActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbTourActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        if(tbl.getSelectedRow() != -1){   
+            int index= tbl.getSelectedRow();
+            String nombre = tbl.getValueAt(index,0).toString();
+            String id = cmbIdTour.getItemAt(cmbTour.getSelectedIndex());
+            String fecha = txtFecha.getText();
+            int opc = JOptionPane.showConfirmDialog(null, "¿Desea eliminar "+nombre+" con fecha "+fecha+"?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(opc == 0){
+                Query query = new Query();
+                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+                String time = (timestamp).toString();
+                time = time.substring(0,19);
+                String valor = "deleted_at = '"+time+"'";
+                    
+                String cond = " WHERE idTour = '"+ id+"' AND fecha = '"+fecha+"' ";
+                query.update("sesion", valor, cond);
+                reset();
+            }
+            
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         int e = tbl.getSelectedRow();
