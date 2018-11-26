@@ -399,16 +399,21 @@ public class frmMantenedorS extends javax.swing.JFrame {
         Query q = new Query();
         String antiguoTour ="",nuevoTour,nuevaFecha,antiguaFecha="",disponibilidad,guia;
        
-        for(int i = 0 ; i< cmbTour.getItemCount();i++){
-            if(cmbTour.getItemAt(i).equals(tbl.getValueAt(tbl.getSelectedRow(), 0))){
-                antiguoTour = cmbIdTour.getItemAt(i);
-            }
-        }
-        antiguaFecha = tbl.getValueAt(tbl.getSelectedRow(),1).toString();
+    
+       
         nuevoTour = cmbIdTour.getItemAt(cmbTour.getSelectedIndex());
         guia = cmbIdGuia.getItemAt(cmbGuia.getSelectedIndex());
         nuevaFecha = txtFecha.getText();
         disponibilidad = txtDisponibilidad.getText();
+        if(tbl.getSelectedRow()!=-1){
+            antiguaFecha = tbl.getValueAt(tbl.getSelectedRow(),1).toString();
+            for(int i = 0 ; i< cmbTour.getItemCount();i++){
+                if(cmbTour.getItemAt(i).equals(tbl.getValueAt(tbl.getSelectedRow(), 0))){
+                    antiguoTour = cmbIdTour.getItemAt(i);
+                }
+            }   
+        }
+        
         if(lblDetalle.getText().equals("Agregar Sesion")){
            try{
                 q.insert("sesion(`idTour`, `fecha`, `disponibilidad`, `idGuia`)",nuevoTour+",'"+nuevaFecha+"',"+disponibilidad+","+guia);
@@ -417,7 +422,8 @@ public class frmMantenedorS extends javax.swing.JFrame {
                JOptionPane.showMessageDialog(null,"No se pudo actualizar"+e,"",2);
            }    
         }else{
-            if(lblDetalle.getText().equals("Modificar Tour")){
+                if(lblDetalle.getText().equals("Modificar Tour")){
+                    
                 try{
                     String valores = "idTour="+nuevoTour+",idGuia="+guia+",fecha='"+nuevaFecha+"',disponibilidad="+disponibilidad;
                     q.update("sesion",valores," WHERE idTour="+antiguoTour+" AND fecha='"+antiguaFecha+"'");

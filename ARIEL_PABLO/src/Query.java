@@ -51,7 +51,7 @@ public class Query {
         try{
             
             lista=sentencia.executeQuery("SELECT "+campos+" FROM "+tabla+condicion);
-        
+       
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null,e,"",2);
         }

@@ -397,9 +397,9 @@ public class frmMantenedorT extends javax.swing.JFrame {
         Query query = new Query();
         if(lblDetalle.getText().equals("Agregar Tour")){ 
             try{
-                String valores = "null,'"+nom+"','"+descrip+"',"+precio+",'"+duracion+"',"+ubicacion+",NULL";
+                String valores = "null,'"+nom+"','"+descrip+"',"+precio+",'"+duracion+"','"+ubicacion+"',NULL";
                 query.insert("tour",valores);
-                JOptionPane.showMessageDialog(null,"Agregado exitosamente","",2);
+                
             }
             catch(Exception e){
                 JOptionPane.showMessageDialog(null,"No se pudo actualizar","",2);
