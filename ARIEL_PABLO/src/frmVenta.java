@@ -1,6 +1,7 @@
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -314,17 +315,15 @@ public class frmVenta extends javax.swing.JFrame {
 
             }    
         }
+        spnEntradas.setValue(0);
     }//GEN-LAST:event_cmbFechaTourMouseClicked
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        frmMenu menu = new frmMenu();
-        this.dispose();
-        menu.pack();
-        menu.setVisible(true);
+        reset();
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void cmbFechaTourMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbFechaTourMouseMoved
-        
+
     }//GEN-LAST:event_cmbFechaTourMouseMoved
 
     private void cmbFechaTourMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbFechaTourMouseEntered
@@ -343,30 +342,36 @@ public class frmVenta extends javax.swing.JFrame {
         String fecha = cmbFechaTour.getSelectedItem().toString();
         String id = cmbIdTour.getSelectedItem().toString();
         Query query = new Query();
-        ResultSet lista = query.select("disponibilidad", "sesion", " WHERE idTour = '"+id+"'");
+        
         //Para obtener la disponibilidad y despues obtener el maximo de entradas que se puede vender
         try{
+            ResultSet lista = query.select("disponibilidad", "sesion", " WHERE idTour = '"+id+"' AND fecha='"+fecha+"'");
             String disponibilidad = "";
-            String vendidas="";
+            
             while(lista.next()){
                 disponibilidad = lista.getString("disponibilidad");
                 break;
             }
             lista = query.select("sum(cantidad)","sesion_has_venta"," WHERE idTour = '"+ id+"' AND fecha= '"+fecha+"'");
+            String vendidas= "";
             while(lista.next()){
                 vendidas = lista.getString("sum(cantidad)");
                 break;
+            }  
+            if(vendidas==null){
+                vendidas="0";
             }
-
-            int totalDisponible = Integer.parseInt(disponibilidad) - Integer.parseInt(vendidas) -1;
+           
+            int totalDisponible = Integer.parseInt(disponibilidad) - Integer.parseInt(vendidas) ;
             if((totalDisponible - actual)<-1){
                 actual = 0;
             }
+            
             SpinnerNumberModel model= new SpinnerNumberModel(0, actual, totalDisponible, 1);  
             spnEntradas.setModel(model);
 
         }catch(Exception e){
-
+                
         }
     }
     private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseClicked
@@ -391,26 +396,40 @@ public class frmVenta extends javax.swing.JFrame {
         String telefono = txtTelefono.getText();
         String rut = txtRut.getText();
         String idTour = cmbIdTour.getItemAt(cmbIdTour.getSelectedIndex());
-        String fecha = cmbFechaTour.getItemAt(cmbFechaTour.getSelectedIndex());
+        String fechaSesion = cmbFechaTour.getItemAt(cmbFechaTour.getSelectedIndex());
         String cantidad = spnEntradas.getValue().toString();
+        
+        JOptionPane.showMessageDialog(null, "nombre = "+nombre +" Fecha= "+fechaSesion, "", 2);
         Query query = new Query();
-        ResultSet lista = query.select("max(idCliente)", "cliente", "");
-        int maxCliente = 0;
         try{
-            while(lista.next()){
-                maxCliente = lista.getInt("max(idCliente)");
-                maxCliente = maxCliente +1;
-                break;
-            }
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            String fechaVenta = (timestamp).toString();
+            fechaVenta = fechaVenta.substring(0,10);
             
-            query.insert("cliente", "idCliente = "+maxCliente+" , nombre = '"+nombre+"', telefono = '"+telefono+"', rut= '"+rut+"'");
-            // me falta insertar todo en las tablas de venta y sesion_has_venta
-        }catch(Exception e ){
-          
+            query.insert("venta", "null ,'"+fechaVenta+"','"+nombre+"','"+telefono+"','"+rut+"'");
+            ResultSet idVentaQuery = query.select("max(idVenta)","venta","");
+            // obtener la Id de venta ;V
+            String idVenta="";
+            while(idVentaQuery.next()){
+                idVenta = idVentaQuery.getString("max(idVenta)");
+            }
+            query.insert("sesion_has_venta", " '"+idTour+"','"+fechaSesion+"','"+idVenta+"','"+cantidad+"'  ");
+        
+        }catch(Exception e){
+            
         }
+        reset();
+            // me falta insertar todo en las tablas de venta y sesion_has_venta
+            
+      
         
     }//GEN-LAST:event_btnAceptarActionPerformed
-
+    public void reset(){
+        frmMenu menu = new frmMenu();
+        this.dispose();
+        menu.pack();
+        menu.setVisible(true);
+    }
     /**
      * @param args the command line arguments
      */
