@@ -20,7 +20,7 @@ public class Query {
     String url ="";
     String user="root";
     String pass="";
-    String name="bd_tours";
+    String name="mydb";
     Connection conex;
     Statement sentencia;
     public Query(){
