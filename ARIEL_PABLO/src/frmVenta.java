@@ -314,7 +314,7 @@ public class frmVenta extends javax.swing.JFrame {
     }//GEN-LAST:event_txtFechaActionPerformed
 
     private void tblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMouseClicked
-        String nomTour ="" ,fecha="";
+        String nomTour ="" ,fecha="",idTour="";
         fecha = tbl.getValueAt(tbl.getSelectedRow(), 1).toString();
         nomTour = tbl.getValueAt(tbl.getSelectedRow(), 0).toString();
         
@@ -331,12 +331,44 @@ public class frmVenta extends javax.swing.JFrame {
                 txtUbicacion.setText(lista.getString("ubicacion"));
                 txtTelefonoGuia.setText(lista.getString("telefono"));
                 txtPrecio.setText(lista.getString("precio"));
+                idTour = lista.getString("tour.idTour");
             }
+            setSpinner(0,fecha,idTour);
+            
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e, "", 2);
         }
     }//GEN-LAST:event_tblMouseClicked
+    public void setSpinner(int actual,String fecha,String id){       
+        Query query = new Query();   
+        //Para obtener la disponibilidad y despues obtener el maximo de entradas que se puede vender
+        try{
+            ResultSet lista = query.select("disponibilidad", "sesion", " WHERE idTour = '"+id+"' AND fecha='"+fecha+"'");
+            String disponibilidad = "";
+            while(lista.next()){
+                disponibilidad = lista.getString("disponibilidad");
+                break;
+            }
+            lista = query.select("sum(cantidad)","sesion_has_venta"," WHERE idTour = '"+ id+"' AND fecha= '"+fecha+"'");
+            String vendidas= "";
+            while(lista.next()){
+                vendidas = lista.getString("sum(cantidad)");
+                break;
+            }  
+            if(vendidas==null){
+                vendidas="0";
+            }
+            int totalDisponible = Integer.parseInt(disponibilidad) - Integer.parseInt(vendidas) ;
+            if((totalDisponible - actual)<-1){
+                actual = 0;
+            }  
+            SpinnerNumberModel model= new SpinnerNumberModel(0, actual, totalDisponible, 1);  
+            spnEntradas.setModel(model);
 
+        }catch(Exception e){
+                
+        }
+    }
     private void spnEntradasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_spnEntradasMouseEntered
 
     }//GEN-LAST:event_spnEntradasMouseEntered
