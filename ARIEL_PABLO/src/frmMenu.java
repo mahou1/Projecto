@@ -33,10 +33,13 @@ public class frmMenu extends javax.swing.JFrame {
         btnTours = new javax.swing.JButton();
         btnGuias = new javax.swing.JButton();
         btnVenta = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Mantenedor");
+        jLabel1.setText("Acciones :");
 
         btnSesiones.setText("Sesiones");
         btnSesiones.addActionListener(new java.awt.event.ActionListener() {
@@ -60,6 +63,18 @@ public class frmMenu extends javax.swing.JFrame {
         });
 
         btnVenta.setText("Venta");
+        btnVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVentaActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel2.setText("Panel de control");
+
+        jLabel3.setText("Mantenedores :");
+
+        jLabel4.setText("Ariel Rubilar - Pablo Torres");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -68,33 +83,43 @@ public class frmMenu extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(150, 150, 150)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(63, 63, 63)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(btnSesiones, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(btnTours, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(btnGuias, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnVenta)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
-                        .addComponent(btnSesiones)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnTours)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnGuias))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(124, 124, 124)
-                        .addComponent(btnVenta)))
-                .addContainerGap(116, Short.MAX_VALUE))
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel4)))
+                .addContainerGap(103, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(21, 21, 21)
+                .addComponent(jLabel2)
+                .addGap(33, 33, 33)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSesiones)
-                    .addComponent(btnTours)
-                    .addComponent(btnGuias))
-                .addGap(61, 61, 61)
+                    .addComponent(btnTours, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnGuias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnVenta)
-                .addContainerGap(112, Short.MAX_VALUE))
+                .addGap(57, 57, 57)
+                .addComponent(jLabel4)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -131,6 +156,13 @@ public class frmMenu extends javax.swing.JFrame {
         guias.pack();
         guias.setVisible(true);
     }//GEN-LAST:event_btnGuiasActionPerformed
+
+    private void btnVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentaActionPerformed
+        frmVenta venta = new frmVenta();
+        this.dispose();
+        venta.pack();
+        venta.setVisible(true);
+    }//GEN-LAST:event_btnVentaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -174,6 +206,9 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JButton btnTours;
     private javax.swing.JButton btnVenta;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

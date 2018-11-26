@@ -31,23 +31,31 @@ public class frmMantenedorG extends javax.swing.JFrame {
         txtTelefono.setEnabled(false);
         btnAceptar.setEnabled(false);
         btnCancelar.setEnabled(false);
+       
     }
     public void activarAgregar(){
         txtNombre.setEnabled(true);
         txtTelefono.setEnabled(true);
         btnAceptar.setEnabled(true);
         btnCancelar.setEnabled(true);
+        cmbActivo.setEnabled(true);
     }
   
     public void setGuia(){
         lblTitulo.setText("Guías");
-        String[] columnas = {"id","nombre","telefono"};
+        String[] columnas = {"id","nombre","telefono","Activo"};
         DefaultTableModel model =  new DefaultTableModel(null,columnas);
         Query q = new Query();
         try{
             ResultSet lista= q.select("*","guia","");
             while(lista.next()){
-                model.addRow(new Object[]{lista.getString("idGuia"),lista.getString("nombre"),lista.getString("telefono")});
+                String activo="";
+                if(lista.getString("deleted_at")== null){
+                    activo="S";
+                }else{
+                    activo="N";
+                }
+                model.addRow(new Object[]{lista.getString("idGuia"),lista.getString("nombre"),lista.getString("telefono"),activo});
             }
             q.cerrar();
         }catch(SQLException e){
@@ -59,15 +67,6 @@ public class frmMantenedorG extends javax.swing.JFrame {
         
     }
     
-    
-     public JTable getjTbl() {
-        return tbl;
-    }
-    
-    public JLabel getLblTitulo(){
-        return lblTitulo;
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -94,6 +93,8 @@ public class frmMantenedorG extends javax.swing.JFrame {
         btnAgregar = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
         lblSub = new javax.swing.JLabel();
+        cmbActivo = new javax.swing.JComboBox<>();
+        lblActivo = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -184,6 +185,17 @@ public class frmMantenedorG extends javax.swing.JFrame {
 
         lblSub.setText("Detalles ");
 
+        cmbActivo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "S", "N" }));
+        cmbActivo.setSelectedIndex(-1);
+        cmbActivo.setEnabled(false);
+        cmbActivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbActivoActionPerformed(evt);
+            }
+        });
+
+        lblActivo.setText("Activo:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -200,18 +212,23 @@ public class frmMantenedorG extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel2)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel1)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(lblSub)
-                                    .addGap(57, 57, 57)))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(lblSub)
+                                        .addGap(57, 57, 57)))
+                                .addGap(18, 18, 18)
+                                .addComponent(lblActivo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cmbActivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGap(40, 40, 40)
                         .addComponent(btnAgregar)
@@ -244,9 +261,13 @@ public class frmMantenedorG extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addComponent(lblSub)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lblActivo)
+                        .addComponent(cmbActivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -273,25 +294,29 @@ public class frmMantenedorG extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        desactivarAgregar();
-        txtNombre.setText("");
-        txtTelefono.setText("");
+        reset();       
+        
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        String nom,telefono;
+        String nom,telefono,estado="";
         nom = txtNombre.getText();
         telefono = txtTelefono.getText();
         Query query = new Query();
-        if(lblSub.getText().equals("Agregar")){
-            String valores = "null,'"+nom+"','"+telefono+"'";
+        if(cmbActivo.getSelectedItem().equals("S")){
+            estado = " = NULL";
+        }else{
+            estado = " = CURRENT_TIMESTAMP";
+        }
+        if(lblSub.getText().equals("Agregar Guia")){
+            String valores = "null,'"+nom+"','"+telefono+"',NULL";
             query.insert("guia",valores);
             JOptionPane.showMessageDialog(null,"Agregado exitosamente","",2); 
         }else{
-            if(lblSub.getText().equals("Modificar")){
+            if(lblSub.getText().equals("Modificar Guia")){
                 int index =  tbl.getSelectedRow();
                 int indice = Integer.parseInt(tbl.getValueAt(index, 0).toString());
-                String valor = "nombre = '"+ nom+"', telefono = '"+telefono+"'" ;
+                String valor = "nombre = '"+ nom+"', telefono = '"+telefono+"', deleted_at"+estado ;
                 String cond = " WHERE idGuia = "+ indice;
                 query.update("guia", valor, cond);
             
@@ -321,7 +346,11 @@ public class frmMantenedorG extends javax.swing.JFrame {
         activarAgregar();
         txtNombre.setText("");
         txtTelefono.setText("");
-        lblSub.setText("Agregar");
+        lblSub.setText("Agregar Guia");
+         btnAgregar.setEnabled(false);
+        btnModificar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        cmbActivo.setSelectedIndex(0);
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void tblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMouseClicked
@@ -330,20 +359,29 @@ public class frmMantenedorG extends javax.swing.JFrame {
         String id = tbl.getValueAt(index, 0).toString();
         String nombre = tbl.getValueAt(index,1).toString();
         String telefono = tbl.getValueAt(index,2).toString();
-             
+        for(int i=0;i<cmbActivo.getItemCount();i++){
+                     if(tbl.getValueAt(tbl.getSelectedRow(), 3).equals(cmbActivo.getItemAt(i))){
+                         cmbActivo.setSelectedIndex(i);
+                     }
+                 }
         txtNombre.setText(nombre);
         txtTelefono.setText(telefono);
     
     }//GEN-LAST:event_tblMouseClicked
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        if(tbl.getSelectedRow()==-1){
+        if(tbl.getSelectedRow()!=-1){
             activarAgregar();
-            lblSub.setText("Modificar");        
+            lblSub.setText("Modificar Guia");
+            btnAgregar.setEnabled(false);
+            btnModificar.setEnabled(false);
+            btnEliminar.setEnabled(false);
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        
+        
         String nom = txtNombre.getText();
         int opc = JOptionPane.showConfirmDialog(null, "¿Desea eliminar "+nom+" ?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if(opc==0){
@@ -365,6 +403,10 @@ public class frmMantenedorG extends javax.swing.JFrame {
     private void txtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTelefonoActionPerformed
+
+    private void cmbActivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbActivoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbActivoActionPerformed
     public void reset(){
         this.dispose();
         frmMantenedorG mantenedor = new frmMantenedorG();
@@ -417,12 +459,14 @@ public class frmMantenedorG extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnVolver;
+    private javax.swing.JComboBox<String> cmbActivo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblActivo;
     private javax.swing.JLabel lblSub;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JTable tbl;

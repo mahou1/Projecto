@@ -49,7 +49,9 @@ public class Query {
     public ResultSet select(String campos,String tabla,String condicion){
         ResultSet lista = null;
         try{
+            
             lista=sentencia.executeQuery("SELECT "+campos+" FROM "+tabla+condicion);
+        
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null,e,"",2);
         }
