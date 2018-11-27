@@ -79,7 +79,6 @@ public class frmVenta extends javax.swing.JFrame {
 
         jLabel4 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        lblTitulo1 = new javax.swing.JLabel();
         lblTitulo2 = new javax.swing.JLabel();
         txtNombreCliente = new javax.swing.JTextField();
         lblTitulo3 = new javax.swing.JLabel();
@@ -121,6 +120,7 @@ public class frmVenta extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
 
         jLabel4.setText("jLabel4");
 
@@ -128,35 +128,31 @@ public class frmVenta extends javax.swing.JFrame {
 
         jPanel1.setLayout(null);
 
-        lblTitulo1.setText("Venta");
-        jPanel1.add(lblTitulo1);
-        lblTitulo1.setBounds(364, 30, 74, 23);
-
         lblTitulo2.setText("Datos Cliente");
         jPanel1.add(lblTitulo2);
-        lblTitulo2.setBounds(60, 360, 89, 23);
+        lblTitulo2.setBounds(60, 310, 89, 23);
         jPanel1.add(txtNombreCliente);
-        txtNombreCliente.setBounds(130, 400, 287, 31);
+        txtNombreCliente.setBounds(130, 350, 287, 31);
 
         lblTitulo3.setText("Telefono :");
         jPanel1.add(lblTitulo3);
-        lblTitulo3.setBounds(50, 430, 74, 23);
+        lblTitulo3.setBounds(50, 380, 74, 23);
         jPanel1.add(txtTelefono);
-        txtTelefono.setBounds(130, 430, 134, 31);
+        txtTelefono.setBounds(130, 380, 134, 31);
 
         lblTitulo4.setText("Rut :");
         jPanel1.add(lblTitulo4);
-        lblTitulo4.setBounds(50, 470, 74, 23);
+        lblTitulo4.setBounds(50, 420, 74, 23);
         jPanel1.add(txtRut);
-        txtRut.setBounds(130, 460, 134, 31);
+        txtRut.setBounds(130, 410, 134, 31);
 
         lblTitulo5.setText("Datos Sesion");
         jPanel1.add(lblTitulo5);
-        lblTitulo5.setBounds(550, 360, 110, 23);
+        lblTitulo5.setBounds(550, 310, 110, 23);
 
         lblTitulo6.setText("Nombre :");
         jPanel1.add(lblTitulo6);
-        lblTitulo6.setBounds(50, 400, 74, 23);
+        lblTitulo6.setBounds(50, 350, 74, 23);
 
         btnVolver.setText("Volver");
         btnVolver.addActionListener(new java.awt.event.ActionListener() {
@@ -165,7 +161,7 @@ public class frmVenta extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnVolver);
-        btnVolver.setBounds(220, 670, 69, 25);
+        btnVolver.setBounds(220, 620, 63, 23);
 
         btnAceptar.setText("Aceptar");
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
@@ -174,7 +170,7 @@ public class frmVenta extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnAceptar);
-        btnAceptar.setBounds(110, 670, 77, 25);
+        btnAceptar.setBounds(110, 620, 71, 23);
 
         jPanel2.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
@@ -215,11 +211,11 @@ public class frmVenta extends javax.swing.JFrame {
             }
         });
         jPanel1.add(spnEntradas);
-        spnEntradas.setBounds(130, 500, 61, 31);
+        spnEntradas.setBounds(130, 450, 61, 31);
 
         lblTitulo7.setText("Entradas :");
         jPanel1.add(lblTitulo7);
-        lblTitulo7.setBounds(50, 510, 74, 23);
+        lblTitulo7.setBounds(50, 460, 74, 23);
 
         tbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -240,39 +236,39 @@ public class frmVenta extends javax.swing.JFrame {
         jScrollPane3.setViewportView(tbl);
 
         jPanel1.add(jScrollPane3);
-        jScrollPane3.setBounds(50, 60, 806, 220);
+        jScrollPane3.setBounds(40, 70, 806, 170);
 
         txtNombreTour.setEditable(false);
         jPanel1.add(txtNombreTour);
-        txtNombreTour.setBounds(570, 440, 290, 30);
+        txtNombreTour.setBounds(570, 390, 290, 30);
 
         lblNombreTour.setText("Nombre :");
         jPanel1.add(lblNombreTour);
-        lblNombreTour.setBounds(510, 440, 50, 20);
+        lblNombreTour.setBounds(480, 390, 60, 20);
 
         lblNombre1.setText("Precio :");
         jPanel1.add(lblNombre1);
-        lblNombre1.setBounds(510, 480, 50, 20);
+        lblNombre1.setBounds(480, 430, 70, 20);
 
         txtPrecio.setEditable(false);
         jPanel1.add(txtPrecio);
-        txtPrecio.setBounds(570, 480, 220, 30);
+        txtPrecio.setBounds(570, 430, 220, 30);
 
         txtDuracion.setEditable(false);
         jPanel1.add(txtDuracion);
-        txtDuracion.setBounds(570, 560, 130, 30);
+        txtDuracion.setBounds(570, 510, 130, 30);
 
         lblNombre2.setText("Duración :");
         jPanel1.add(lblNombre2);
-        lblNombre2.setBounds(510, 570, 59, 16);
+        lblNombre2.setBounds(480, 520, 70, 20);
 
         lblNombre3.setText("Ubicación :");
         jPanel1.add(lblNombre3);
-        lblNombre3.setBounds(510, 520, 60, 20);
+        lblNombre3.setBounds(480, 470, 70, 20);
 
         txtUbicacion.setEditable(false);
         jPanel1.add(txtUbicacion);
-        txtUbicacion.setBounds(570, 520, 230, 30);
+        txtUbicacion.setBounds(570, 470, 230, 30);
 
         txtFecha.setEditable(false);
         txtFecha.addActionListener(new java.awt.event.ActionListener() {
@@ -281,23 +277,23 @@ public class frmVenta extends javax.swing.JFrame {
             }
         });
         jPanel1.add(txtFecha);
-        txtFecha.setBounds(570, 390, 190, 30);
+        txtFecha.setBounds(570, 340, 190, 30);
 
         jLabel3.setText("Fecha:");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(510, 400, 39, 16);
+        jLabel3.setBounds(480, 350, 60, 20);
 
         jLabel1.setText("Nombre :");
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(510, 640, 60, 20);
+        jLabel1.setBounds(480, 590, 70, 20);
 
         txtNombreGuia.setEditable(false);
         jPanel1.add(txtNombreGuia);
-        txtNombreGuia.setBounds(570, 640, 220, 30);
+        txtNombreGuia.setBounds(570, 590, 220, 30);
 
         jLabel2.setText("Telefono :");
         jPanel1.add(jLabel2);
-        jLabel2.setBounds(510, 680, 70, 30);
+        jLabel2.setBounds(480, 630, 80, 30);
 
         txtTelefonoGuia.setEditable(false);
         txtTelefonoGuia.addActionListener(new java.awt.event.ActionListener() {
@@ -306,15 +302,15 @@ public class frmVenta extends javax.swing.JFrame {
             }
         });
         jPanel1.add(txtTelefonoGuia);
-        txtTelefonoGuia.setBounds(570, 680, 230, 30);
+        txtTelefonoGuia.setBounds(570, 630, 230, 30);
 
         lblTitulo8.setText("Datos Guia");
         jPanel1.add(lblTitulo8);
-        lblTitulo8.setBounds(560, 610, 74, 23);
+        lblTitulo8.setBounds(560, 560, 74, 23);
 
         lblTotal.setText("Total :");
         jPanel1.add(lblTotal);
-        lblTotal.setBounds(50, 560, 50, 20);
+        lblTotal.setBounds(50, 510, 50, 20);
 
         txtTotal.setEditable(false);
         txtTotal.addActionListener(new java.awt.event.ActionListener() {
@@ -323,7 +319,7 @@ public class frmVenta extends javax.swing.JFrame {
             }
         });
         jPanel1.add(txtTotal);
-        txtTotal.setBounds(130, 560, 220, 30);
+        txtTotal.setBounds(130, 510, 220, 30);
 
         cmbIdTour.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -331,18 +327,18 @@ public class frmVenta extends javax.swing.JFrame {
             }
         });
         jPanel1.add(cmbIdTour);
-        cmbIdTour.setBounds(790, 390, 31, 22);
+        cmbIdTour.setBounds(790, 340, 28, 20);
 
         jPanel1.add(cmbUbicacion);
-        cmbUbicacion.setBounds(110, 300, 140, 22);
+        cmbUbicacion.setBounds(110, 260, 140, 20);
         jPanel1.add(jSeparator1);
-        jSeparator1.setBounds(0, 342, 930, 10);
+        jSeparator1.setBounds(0, 290, 930, 10);
 
         jPanel1.add(cmbTour);
-        cmbTour.setBounds(300, 300, 160, 22);
+        cmbTour.setBounds(330, 260, 160, 20);
 
         jPanel1.add(cmbFecha);
-        cmbFecha.setBounds(520, 300, 120, 22);
+        cmbFecha.setBounds(560, 260, 120, 20);
 
         btnFiltro.setText("Filtro");
         btnFiltro.addActionListener(new java.awt.event.ActionListener() {
@@ -351,19 +347,24 @@ public class frmVenta extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnFiltro);
-        btnFiltro.setBounds(720, 300, 61, 25);
+        btnFiltro.setBounds(790, 260, 57, 23);
 
         jLabel5.setText("Ubicacion:");
         jPanel1.add(jLabel5);
-        jLabel5.setBounds(40, 300, 60, 16);
+        jLabel5.setBounds(40, 260, 60, 14);
 
-        jLabel6.setText("Fecha:");
+        jLabel6.setText("Tour: ");
         jPanel1.add(jLabel6);
-        jLabel6.setBounds(260, 300, 39, 16);
+        jLabel6.setBounds(270, 260, 50, 20);
 
-        jLabel7.setText("Tour:");
+        jLabel7.setText("Fecha:");
         jPanel1.add(jLabel7);
-        jLabel7.setBounds(480, 300, 41, 16);
+        jLabel7.setBounds(500, 260, 41, 14);
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel8.setText("Venta");
+        jPanel1.add(jLabel8);
+        jLabel8.setBounds(380, 30, 171, 29);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -382,6 +383,19 @@ public class frmVenta extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltroActionPerformed
+        setTblSesiones(tblCondicion());
+        limpiar();
+    }//GEN-LAST:event_btnFiltroActionPerformed
+
+    private void cmbIdTourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbIdTourActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbIdTourActionPerformed
+
+    private void txtTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTotalActionPerformed
+
     private void txtTelefonoGuiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoGuiaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTelefonoGuiaActionPerformed
@@ -399,9 +413,9 @@ public class frmVenta extends javax.swing.JFrame {
             Query q = new Query();
             ResultSet lista;
             try{
-              
+
                 lista = q.select("*","tour"," INNER JOIN sesion ON sesion.idTour= tour.idTour INNER JOIN guia ON guia.idGuia = sesion.idGuia"
-                        + " WHERE sesion.deleted_at is Null  AND tour.deleted_at is NULL AND guia.deleted_at is NULL AND tour.nombre='"+nomTour+"' AND sesion.fecha='"+fecha+"'");
+                    + " WHERE sesion.deleted_at is Null  AND tour.deleted_at is NULL AND guia.deleted_at is NULL AND tour.nombre='"+nomTour+"' AND sesion.fecha='"+fecha+"'");
                 txtNombreTour.setText(nomTour);
                 txtFecha.setText(fecha);
                 if(lista.next()){
@@ -415,7 +429,7 @@ public class frmVenta extends javax.swing.JFrame {
                     cmbIdTour.addItem(idTour);
                     cmbIdTour.setSelectedIndex(0);
                 }
-                SpinnerNumberModel model= new SpinnerNumberModel(0,0,disp,1);  
+                SpinnerNumberModel model= new SpinnerNumberModel(0,0,disp,1);
                 spnEntradas.setModel(model);
             }catch(Exception e){
                 JOptionPane.showMessageDialog(null, e, "", 2);
@@ -432,7 +446,7 @@ public class frmVenta extends javax.swing.JFrame {
     }//GEN-LAST:event_spnEntradasMouseMoved
 
     private void jPanel2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseEntered
-       
+
     }//GEN-LAST:event_jPanel2MouseEntered
 
     private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseClicked
@@ -456,7 +470,7 @@ public class frmVenta extends javax.swing.JFrame {
             String fechaSesion = txtFecha.getText();
             String cantidad = spnEntradas.getValue().toString();
             Query query = new Query();
-            try{  
+            try{
                 query.insert("venta", "null ,CURRENT_TIMESTAMP,'"+nombre+"','"+telefono+"','"+rut+"',"+idTour+", '"+fechaSesion+"',"+cantidad+" ");
                 byte cant = (byte)((Byte.parseByte(tbl.getValueAt(tbl.getSelectedRow(), 3).toString()))-Byte.parseByte(spnEntradas.getValue().toString()));
                 query.update("sesion", "disponibilidad ="+cant, " WHERE idTour="+idTour+" AND fecha= '"+fechaSesion+"'");
@@ -474,19 +488,6 @@ public class frmVenta extends javax.swing.JFrame {
         menu.pack();
         menu.setVisible(true);
     }//GEN-LAST:event_btnVolverActionPerformed
-
-    private void txtTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTotalActionPerformed
-
-    private void cmbIdTourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbIdTourActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbIdTourActionPerformed
-
-    private void btnFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltroActionPerformed
-        setTblSesiones(tblCondicion());
-        limpiar();
-    }//GEN-LAST:event_btnFiltroActionPerformed
     
     public void limpiar(){
        txtNombreCliente.setText("");
@@ -567,6 +568,7 @@ public class frmVenta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -575,7 +577,6 @@ public class frmVenta extends javax.swing.JFrame {
     private javax.swing.JLabel lblNombre2;
     private javax.swing.JLabel lblNombre3;
     private javax.swing.JLabel lblNombreTour;
-    private javax.swing.JLabel lblTitulo1;
     private javax.swing.JLabel lblTitulo2;
     private javax.swing.JLabel lblTitulo3;
     private javax.swing.JLabel lblTitulo4;
