@@ -66,7 +66,7 @@ public class frmVenta extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e, "", 2);
         }
         tbl.setModel(model);
-
+       
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -162,7 +162,7 @@ public class frmVenta extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnVolver);
-        btnVolver.setBounds(220, 620, 63, 23);
+        btnVolver.setBounds(220, 620, 69, 25);
 
         btnAceptar.setText("Aceptar");
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
@@ -171,7 +171,7 @@ public class frmVenta extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnAceptar);
-        btnAceptar.setBounds(110, 620, 71, 23);
+        btnAceptar.setBounds(110, 620, 77, 25);
 
         jPanel2.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
@@ -201,6 +201,11 @@ public class frmVenta extends javax.swing.JFrame {
         jPanel1.add(jPanel2);
         jPanel2.setBounds(925, 331, 200, 74);
 
+        spnEntradas.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spnEntradasStateChanged(evt);
+            }
+        });
         spnEntradas.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 spnEntradasMouseMoved(evt);
@@ -341,18 +346,18 @@ public class frmVenta extends javax.swing.JFrame {
             }
         });
         jPanel1.add(cmbIdTour);
-        cmbIdTour.setBounds(790, 340, 28, 20);
+        cmbIdTour.setBounds(790, 340, 31, 22);
 
         jPanel1.add(cmbUbicacion);
-        cmbUbicacion.setBounds(110, 260, 140, 20);
+        cmbUbicacion.setBounds(110, 260, 140, 22);
         jPanel1.add(jSeparator1);
         jSeparator1.setBounds(0, 290, 930, 10);
 
         jPanel1.add(cmbTour);
-        cmbTour.setBounds(330, 260, 160, 20);
+        cmbTour.setBounds(330, 260, 160, 22);
 
         jPanel1.add(cmbFecha);
-        cmbFecha.setBounds(560, 260, 120, 20);
+        cmbFecha.setBounds(560, 260, 120, 22);
 
         btnFiltro.setText("Filtro");
         btnFiltro.addActionListener(new java.awt.event.ActionListener() {
@@ -361,24 +366,24 @@ public class frmVenta extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnFiltro);
-        btnFiltro.setBounds(790, 260, 57, 23);
+        btnFiltro.setBounds(790, 260, 61, 25);
 
         jLabel5.setText("Ubicacion:");
         jPanel1.add(jLabel5);
-        jLabel5.setBounds(40, 260, 60, 14);
+        jLabel5.setBounds(40, 260, 60, 16);
 
         jLabel6.setText("Tour: ");
         jPanel1.add(jLabel6);
-        jLabel6.setBounds(270, 260, 50, 20);
+        jLabel6.setBounds(470, 300, 36, 16);
 
         jLabel7.setText("Fecha:");
         jPanel1.add(jLabel7);
-        jLabel7.setBounds(500, 260, 41, 14);
+        jLabel7.setBounds(500, 260, 41, 16);
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel8.setText("Venta");
         jPanel1.add(jLabel8);
-        jLabel8.setBounds(380, 30, 171, 29);
+        jLabel8.setBounds(370, 40, 100, 20);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -421,6 +426,7 @@ public class frmVenta extends javax.swing.JFrame {
 
     private void tblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMouseClicked
         if(tbl.getSelectedRow()!=-1){
+            txtTotal.setText("");
             String nomTour ="" ,fecha="",idTour="";
             fecha = tbl.getValueAt(tbl.getSelectedRow(), 1).toString();
             nomTour = tbl.getValueAt(tbl.getSelectedRow(), 0).toString();
@@ -520,6 +526,17 @@ public class frmVenta extends javax.swing.JFrame {
     private void spnEntradasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_spnEntradasMousePressed
 
     }//GEN-LAST:event_spnEntradasMousePressed
+
+    private void spnEntradasStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spnEntradasStateChanged
+        if(tbl.getSelectedRow() != -1 ){
+            int cant = Integer.parseInt(spnEntradas.getValue().toString());
+            int precio = Integer.parseInt((tbl.getValueAt(tbl.getSelectedRow(), 2).toString()));
+            txtTotal.setText(""+cant*precio+"");
+        }else{
+            spnEntradas.setValue(0);
+        }
+        
+    }//GEN-LAST:event_spnEntradasStateChanged
 
     public void limpiar(){
        txtNombreCliente.setText("");
