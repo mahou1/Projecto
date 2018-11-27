@@ -398,20 +398,16 @@ public class frmMantenedorT extends javax.swing.JFrame {
         if(lblDetalle.getText().equals("Agregar Tour")){ 
             try{
                 String valores = "null,'"+nom+"','"+descrip+"',"+precio+",'"+duracion+"','"+ubicacion+"',NULL";
-                query.insert("tour",valores);
-                
+                query.insert("tour",valores);        
             }
             catch(Exception e){
                 JOptionPane.showMessageDialog(null,"No se pudo actualizar","",2);
             }
-           
-
         }else{
            if(lblDetalle.getText().equals("Modificar Tour")){
                 int id = Integer.parseInt(tbl.getValueAt(index,0).toString());
-
                 try{
-                    String valores = "nombre='"+nom+"',descripcion='"+descrip+"',precio="+precio+",duracion='"+duracion+"',ubicacion="+ubicacion+", deleted_at"+estado;
+                    String valores = "nombre='"+nom+"',descripcion='"+descrip+"',precio="+precio+",duracion='"+duracion+"',ubicacion='"+ubicacion+"', deleted_at"+estado;
                     query.update("tour",valores," WHERE idTour="+id);
                     JOptionPane.showMessageDialog(null,"Actualizacion exitosa","",2);
                 }
@@ -450,32 +446,32 @@ public class frmMantenedorT extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void tblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMouseClicked
-        int index = tbl.getSelectedRow();
-        int id = Integer.parseInt(tbl.getValueAt(index, 0).toString());
-        
-        try{
-            Query q = new Query();
-            ResultSet item = q.select("*", "tour", " WHERE idTour="+id);
-            if(item.next()){
-                txtDescripcion.setText(item.getString("descripcion"));
-                 txtDuracion.setText(item.getString("duracion"));
-                 txtNombre.setText(item.getString("nombre"));
-                 txtPrecio.setText(item.getString("precio"));
-                 txtUbicacion.setText(item.getString("ubicacion"));
-                 for(int i=0;i<cmbActivo.getItemCount();i++){
-                     if(tbl.getValueAt(tbl.getSelectedRow(), 4).equals(cmbActivo.getItemAt(i))){
-                         cmbActivo.setSelectedIndex(i);
-                     }
-                 }
-            }
-            
-            q.cerrar();
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null,e,"",2);
-        }
-                        
+        if(tbl.getSelectedRow()!=-1){
+            int index = tbl.getSelectedRow();
+            int id = Integer.parseInt(tbl.getValueAt(index, 0).toString());
 
-        
+            try{
+                Query q = new Query();
+                ResultSet item = q.select("*", "tour", " WHERE idTour="+id);
+                if(item.next()){
+                    txtDescripcion.setText(item.getString("descripcion"));
+                     txtDuracion.setText(item.getString("duracion"));
+                     txtNombre.setText(item.getString("nombre"));
+                     txtPrecio.setText(item.getString("precio"));
+                     txtUbicacion.setText(item.getString("ubicacion"));
+                     for(int i=0;i<cmbActivo.getItemCount();i++){
+                         if(tbl.getValueAt(tbl.getSelectedRow(), 4).equals(cmbActivo.getItemAt(i))){
+                             cmbActivo.setSelectedIndex(i);
+                         }
+                     }
+                }
+
+                q.cerrar();
+            }catch(SQLException e){
+                JOptionPane.showMessageDialog(null,e,"",2);
+            }   
+        }
+       
     }//GEN-LAST:event_tblMouseClicked
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed

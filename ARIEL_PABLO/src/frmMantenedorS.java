@@ -398,9 +398,6 @@ public class frmMantenedorS extends javax.swing.JFrame {
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         Query q = new Query();
         String antiguoTour ="",nuevoTour,nuevaFecha,antiguaFecha="",disponibilidad,guia;
-       
-    
-       
         nuevoTour = cmbIdTour.getItemAt(cmbTour.getSelectedIndex());
         guia = cmbIdGuia.getItemAt(cmbGuia.getSelectedIndex());
         nuevaFecha = txtFecha.getText();
@@ -461,40 +458,41 @@ public class frmMantenedorS extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbIdTourActionPerformed
 
     private void tblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMouseClicked
-        int index,idTour=0;
-        index= tbl.getSelectedRow();
-        String tour="",fecha="" ,guia="",disponibilidad="";
-        tour = tbl.getValueAt(index,0).toString();
-        fecha = tbl.getValueAt(index, 1).toString();
-        disponibilidad =tbl.getValueAt(index, 3).toString();
-        Query q = new Query();
-        ResultSet lista;
-        for(int i = 0 ; i< cmbTour.getItemCount();i++){
-            if(cmbTour.getItemAt(i).equals(tour)){
-                idTour = Integer.parseInt(cmbIdTour.getItemAt(i));
+        if(tbl.getSelectedRow()!=-1){
+            int index,idTour=0;
+            index= tbl.getSelectedRow();
+            String tour="",fecha="" ,guia="",disponibilidad="";
+            tour = tbl.getValueAt(index,0).toString();
+            fecha = tbl.getValueAt(index, 1).toString();
+            disponibilidad =tbl.getValueAt(index, 3).toString();
+            Query q = new Query();
+            ResultSet lista;
+            for(int i = 0 ; i< cmbTour.getItemCount();i++){
+                if(cmbTour.getItemAt(i).equals(tour)){
+                    idTour = Integer.parseInt(cmbIdTour.getItemAt(i));
+                }
             }
+            try{
+                lista = q.select("*", "sesion", " INNER JOIN guia ON sesion.idGuia=guia.idGuia WHERE fecha='"+fecha+"' AND idTour="+idTour);
+                if(lista.next()){
+                    guia = lista.getString("nombre");
+                }
+            }catch(SQLException e){
+                JOptionPane.showMessageDialog(null, e, "", 2);
+            }   
+            for(int i = 0 ; i< cmbTour.getItemCount();i++){
+                if(cmbTour.getItemAt(i).equals(tour)){
+                    cmbTour.setSelectedIndex(i);
+                }
+            }
+            for(int i = 0 ; i< cmbGuia.getItemCount();i++){
+                if(cmbGuia.getItemAt(i).equals(guia)){
+                    cmbGuia.setSelectedIndex(i);
+                }
+            }
+            txtFecha.setText(fecha);
+            txtDisponibilidad.setText(disponibilidad);
         }
-        try{
-            lista = q.select("*", "sesion", " INNER JOIN guia ON sesion.idGuia=guia.idGuia WHERE fecha='"+fecha+"' AND idTour="+idTour);
-            if(lista.next()){
-                guia = lista.getString("nombre");
-            }
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, e, "", 2);
-        }   
-        for(int i = 0 ; i< cmbTour.getItemCount();i++){
-            if(cmbTour.getItemAt(i).equals(tour)){
-                cmbTour.setSelectedIndex(i);
-            }
-        }
-        for(int i = 0 ; i< cmbGuia.getItemCount();i++){
-            if(cmbGuia.getItemAt(i).equals(guia)){
-                cmbGuia.setSelectedIndex(i);
-            }
-        }
-        txtFecha.setText(fecha);
-        txtDisponibilidad.setText(disponibilidad);
-      
     }//GEN-LAST:event_tblMouseClicked
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed

@@ -354,19 +354,19 @@ public class frmMantenedorG extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void tblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMouseClicked
-        // Obtenemos el primer dato del renglon seleccionado
-        int index =  tbl.getSelectedRow();
-        String id = tbl.getValueAt(index, 0).toString();
-        String nombre = tbl.getValueAt(index,1).toString();
-        String telefono = tbl.getValueAt(index,2).toString();
-        for(int i=0;i<cmbActivo.getItemCount();i++){
-                     if(tbl.getValueAt(tbl.getSelectedRow(), 3).equals(cmbActivo.getItemAt(i))){
-                         cmbActivo.setSelectedIndex(i);
+         if(tbl.getSelectedRow()!=-1){
+            int index =  tbl.getSelectedRow();
+            String id = tbl.getValueAt(index, 0).toString();
+            String nombre = tbl.getValueAt(index,1).toString();
+            String telefono = tbl.getValueAt(index,2).toString();
+            for(int i=0;i<cmbActivo.getItemCount();i++){
+                         if(tbl.getValueAt(tbl.getSelectedRow(), 3).equals(cmbActivo.getItemAt(i))){
+                             cmbActivo.setSelectedIndex(i);
+                         }
                      }
-                 }
-        txtNombre.setText(nombre);
-        txtTelefono.setText(telefono);
-    
+            txtNombre.setText(nombre);
+            txtTelefono.setText(telefono);
+         }
     }//GEN-LAST:event_tblMouseClicked
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed

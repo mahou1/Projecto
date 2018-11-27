@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
@@ -26,12 +27,31 @@ public class frmVenta extends javax.swing.JFrame {
      */
     public frmVenta() {
         initComponents();
-        setCmbSesiones("");
-      
+        setTblSesiones("");
+        cmbIdTour.setVisible(false);
+        setCmb("tour","tour.nombre",cmbTour);
+        setCmb("sesion","fecha",cmbFecha);
+        setCmb("tour","ubicacion",cmbUbicacion);
+        cmbTour.setSelectedIndex(-1);
+        cmbUbicacion.setSelectedIndex(-1);
+        cmbFecha.setSelectedIndex(-1);
     }
-    
-    
-    public void setCmbSesiones(String condicion){
+ 
+    public void setCmb(String tabla,String col,JComboBox a){
+         Query query = new Query();
+         ResultSet lista;
+         lista = query.select("DISTINCT "+col,"tour"," INNER JOIN sesion ON sesion.idTour= tour.idTour INNER JOIN guia ON guia.idGuia = sesion.idGuia"
+                    + " WHERE sesion.deleted_at is Null  AND tour.deleted_at is NULL AND guia.deleted_at is NULL");
+         try{
+             while(lista.next()){
+                 a.addItem(lista.getString(col));
+             }
+         }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e, "", 2);
+         }
+         
+    }
+    public void setTblSesiones(String condicion){
         Query query = new Query();
         String[] columnas = {"Tour","fecha","precio","disponibilad","Ubicacion","Guia"};
         DefaultTableModel model =  new DefaultTableModel(null,columnas);
@@ -41,10 +61,9 @@ public class frmVenta extends javax.swing.JFrame {
             
             while(lista.next()){
                 model.addRow(new Object[]{lista.getString("tour.nombre"),lista.getString("fecha"),lista.getString("precio"),lista.getString("disponibilidad"),lista.getString("ubicacion"),lista.getString("guia.nombre")});
-
             }
         }catch(Exception e){
-            
+            JOptionPane.showMessageDialog(null, e, "", 2);   
         }
         tbl.setModel(model); 
     }
@@ -57,6 +76,7 @@ public class frmVenta extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel4 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         lblTitulo1 = new javax.swing.JLabel();
         lblTitulo2 = new javax.swing.JLabel();
@@ -92,6 +112,13 @@ public class frmVenta extends javax.swing.JFrame {
         lblTotal = new javax.swing.JLabel();
         txtTotal = new javax.swing.JTextField();
         cmbIdTour = new javax.swing.JComboBox<>();
+        cmbUbicacion = new javax.swing.JComboBox<>();
+        jSeparator1 = new javax.swing.JSeparator();
+        cmbTour = new javax.swing.JComboBox<>();
+        cmbFecha = new javax.swing.JComboBox<>();
+        btnFiltro = new javax.swing.JButton();
+
+        jLabel4.setText("jLabel4");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -103,29 +130,29 @@ public class frmVenta extends javax.swing.JFrame {
 
         lblTitulo2.setText("Datos Cliente");
         jPanel1.add(lblTitulo2);
-        lblTitulo2.setBounds(32, 297, 89, 23);
+        lblTitulo2.setBounds(60, 360, 89, 23);
         jPanel1.add(txtNombreCliente);
-        txtNombreCliente.setBounds(109, 331, 287, 31);
+        txtNombreCliente.setBounds(130, 400, 287, 31);
 
         lblTitulo3.setText("Telefono :");
         jPanel1.add(lblTitulo3);
-        lblTitulo3.setBounds(25, 370, 74, 23);
+        lblTitulo3.setBounds(50, 430, 74, 23);
         jPanel1.add(txtTelefono);
-        txtTelefono.setBounds(109, 366, 134, 31);
+        txtTelefono.setBounds(130, 430, 134, 31);
 
         lblTitulo4.setText("Rut :");
         jPanel1.add(lblTitulo4);
-        lblTitulo4.setBounds(30, 410, 74, 23);
+        lblTitulo4.setBounds(50, 470, 74, 23);
         jPanel1.add(txtRut);
-        txtRut.setBounds(110, 400, 134, 31);
+        txtRut.setBounds(130, 460, 134, 31);
 
         lblTitulo5.setText("Datos Sesion");
         jPanel1.add(lblTitulo5);
-        lblTitulo5.setBounds(470, 300, 74, 23);
+        lblTitulo5.setBounds(550, 360, 74, 23);
 
         lblTitulo6.setText("Nombre :");
         jPanel1.add(lblTitulo6);
-        lblTitulo6.setBounds(25, 335, 74, 23);
+        lblTitulo6.setBounds(50, 400, 74, 23);
 
         btnVolver.setText("Volver");
         btnVolver.addActionListener(new java.awt.event.ActionListener() {
@@ -134,7 +161,7 @@ public class frmVenta extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnVolver);
-        btnVolver.setBounds(200, 610, 63, 23);
+        btnVolver.setBounds(220, 670, 69, 25);
 
         btnAceptar.setText("Aceptar");
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
@@ -143,7 +170,7 @@ public class frmVenta extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnAceptar);
-        btnAceptar.setBounds(90, 610, 71, 23);
+        btnAceptar.setBounds(110, 670, 77, 25);
 
         jPanel2.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
@@ -184,11 +211,11 @@ public class frmVenta extends javax.swing.JFrame {
             }
         });
         jPanel1.add(spnEntradas);
-        spnEntradas.setBounds(110, 440, 61, 31);
+        spnEntradas.setBounds(130, 500, 61, 31);
 
         lblTitulo7.setText("Entradas :");
         jPanel1.add(lblTitulo7);
-        lblTitulo7.setBounds(30, 450, 74, 23);
+        lblTitulo7.setBounds(50, 510, 74, 23);
 
         tbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -213,35 +240,35 @@ public class frmVenta extends javax.swing.JFrame {
 
         txtNombreTour.setEditable(false);
         jPanel1.add(txtNombreTour);
-        txtNombreTour.setBounds(490, 380, 290, 30);
+        txtNombreTour.setBounds(570, 440, 290, 30);
 
         lblNombreTour.setText("Nombre :");
         jPanel1.add(lblNombreTour);
-        lblNombreTour.setBounds(430, 380, 50, 20);
+        lblNombreTour.setBounds(510, 440, 50, 20);
 
         lblNombre1.setText("Precio :");
         jPanel1.add(lblNombre1);
-        lblNombre1.setBounds(430, 420, 50, 20);
+        lblNombre1.setBounds(510, 480, 50, 20);
 
         txtPrecio.setEditable(false);
         jPanel1.add(txtPrecio);
-        txtPrecio.setBounds(490, 420, 220, 30);
+        txtPrecio.setBounds(570, 480, 220, 30);
 
         txtDuracion.setEditable(false);
         jPanel1.add(txtDuracion);
-        txtDuracion.setBounds(490, 500, 130, 30);
+        txtDuracion.setBounds(570, 560, 130, 30);
 
         lblNombre2.setText("Duración :");
         jPanel1.add(lblNombre2);
-        lblNombre2.setBounds(430, 510, 49, 14);
+        lblNombre2.setBounds(510, 570, 59, 16);
 
         lblNombre3.setText("Ubicación :");
         jPanel1.add(lblNombre3);
-        lblNombre3.setBounds(430, 460, 60, 20);
+        lblNombre3.setBounds(510, 520, 60, 20);
 
         txtUbicacion.setEditable(false);
         jPanel1.add(txtUbicacion);
-        txtUbicacion.setBounds(490, 460, 230, 30);
+        txtUbicacion.setBounds(570, 520, 230, 30);
 
         txtFecha.setEditable(false);
         txtFecha.addActionListener(new java.awt.event.ActionListener() {
@@ -250,23 +277,23 @@ public class frmVenta extends javax.swing.JFrame {
             }
         });
         jPanel1.add(txtFecha);
-        txtFecha.setBounds(490, 330, 130, 30);
+        txtFecha.setBounds(570, 390, 190, 30);
 
         jLabel3.setText("Fecha:");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(430, 340, 33, 14);
+        jLabel3.setBounds(510, 400, 39, 16);
 
         jLabel1.setText("Nombre :");
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(430, 580, 60, 20);
+        jLabel1.setBounds(510, 640, 60, 20);
 
         txtNombreGuia.setEditable(false);
         jPanel1.add(txtNombreGuia);
-        txtNombreGuia.setBounds(490, 580, 220, 30);
+        txtNombreGuia.setBounds(570, 640, 220, 30);
 
         jLabel2.setText("Telefono :");
         jPanel1.add(jLabel2);
-        jLabel2.setBounds(430, 620, 70, 30);
+        jLabel2.setBounds(510, 680, 70, 30);
 
         txtTelefonoGuia.setEditable(false);
         txtTelefonoGuia.addActionListener(new java.awt.event.ActionListener() {
@@ -275,15 +302,15 @@ public class frmVenta extends javax.swing.JFrame {
             }
         });
         jPanel1.add(txtTelefonoGuia);
-        txtTelefonoGuia.setBounds(490, 620, 230, 30);
+        txtTelefonoGuia.setBounds(570, 680, 230, 30);
 
         lblTitulo8.setText("Datos Guia");
         jPanel1.add(lblTitulo8);
-        lblTitulo8.setBounds(480, 550, 74, 23);
+        lblTitulo8.setBounds(560, 610, 74, 23);
 
         lblTotal.setText("Total :");
         jPanel1.add(lblTotal);
-        lblTotal.setBounds(30, 500, 50, 20);
+        lblTotal.setBounds(50, 560, 50, 20);
 
         txtTotal.setEditable(false);
         txtTotal.addActionListener(new java.awt.event.ActionListener() {
@@ -292,20 +319,48 @@ public class frmVenta extends javax.swing.JFrame {
             }
         });
         jPanel1.add(txtTotal);
-        txtTotal.setBounds(110, 500, 220, 30);
+        txtTotal.setBounds(130, 560, 220, 30);
 
+        cmbIdTour.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbIdTourActionPerformed(evt);
+            }
+        });
         jPanel1.add(cmbIdTour);
-        cmbIdTour.setBounds(670, 330, 28, 20);
+        cmbIdTour.setBounds(790, 390, 31, 22);
+
+        jPanel1.add(cmbUbicacion);
+        cmbUbicacion.setBounds(130, 300, 100, 22);
+        jPanel1.add(jSeparator1);
+        jSeparator1.setBounds(0, 342, 930, 10);
+
+        jPanel1.add(cmbTour);
+        cmbTour.setBounds(270, 300, 160, 22);
+
+        jPanel1.add(cmbFecha);
+        cmbFecha.setBounds(520, 300, 120, 22);
+
+        btnFiltro.setText("Filtro");
+        btnFiltro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFiltroActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnFiltro);
+        btnFiltro.setBounds(720, 300, 61, 25);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 918, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 906, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 738, Short.MAX_VALUE)
         );
 
         pack();
@@ -320,68 +375,37 @@ public class frmVenta extends javax.swing.JFrame {
     }//GEN-LAST:event_txtFechaActionPerformed
 
     private void tblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMouseClicked
-        String nomTour ="" ,fecha="",idTour="";
-        fecha = tbl.getValueAt(tbl.getSelectedRow(), 1).toString();
-        nomTour = tbl.getValueAt(tbl.getSelectedRow(), 0).toString();
-        int disp = Integer.parseInt(tbl.getValueAt(tbl.getSelectedRow(),3).toString());
-                    
-
-        Query q = new Query();
-        ResultSet lista;
-        try{
-            lista = q.select("*","tour"," INNER JOIN sesion ON sesion.idTour= tour.idTour INNER JOIN guia ON guia.idGuia = sesion.idGuia"
-                    + " WHERE sesion.deleted_at is Null  AND tour.deleted_at is NULL AND guia.deleted_at is NULL AND tour.nombre='"+nomTour+"' AND sesion.fecha='"+fecha+"'");
-            txtNombreTour.setText(nomTour);
-            txtFecha.setText(fecha);
-            if(lista.next()){
-                txtDuracion.setText(lista.getString("tour.duracion"));
-                txtNombreGuia.setText(lista.getString("guia.nombre"));
-                txtUbicacion.setText(lista.getString("ubicacion"));
-                txtTelefonoGuia.setText(lista.getString("telefono"));
-                txtPrecio.setText(lista.getString("precio"));
-                idTour = lista.getString("tour.idTour");
-                
-                cmbIdTour.removeAllItems();
-                cmbIdTour.addItem(idTour);
-                cmbIdTour.setSelectedIndex(0);
+        if(tbl.getSelectedRow()!=-1){
+            String nomTour ="" ,fecha="",idTour="";
+            fecha = tbl.getValueAt(tbl.getSelectedRow(), 1).toString();
+            nomTour = tbl.getValueAt(tbl.getSelectedRow(), 0).toString();
+            int disp = Integer.parseInt(tbl.getValueAt(tbl.getSelectedRow(),3).toString());
+            Query q = new Query();
+            ResultSet lista;
+            try{
+                lista = q.select("*","tour"," INNER JOIN sesion ON sesion.idTour= tour.idTour INNER JOIN guia ON guia.idGuia = sesion.idGuia"
+                        + " WHERE sesion.deleted_at is Null  AND tour.deleted_at is NULL AND guia.deleted_at is NULL AND tour.nombre='"+nomTour+"' AND sesion.fecha='"+fecha+"'");
+                txtNombreTour.setText(nomTour);
+                txtFecha.setText(fecha);
+                if(lista.next()){
+                    txtDuracion.setText(lista.getString("tour.duracion"));
+                    txtNombreGuia.setText(lista.getString("guia.nombre"));
+                    txtUbicacion.setText(lista.getString("ubicacion"));
+                    txtTelefonoGuia.setText(lista.getString("telefono"));
+                    txtPrecio.setText(lista.getString("precio"));
+                    idTour = lista.getString("tour.idTour");
+                    cmbIdTour.removeAllItems();
+                    cmbIdTour.addItem(idTour);
+                    cmbIdTour.setSelectedIndex(0);
+                }
+                SpinnerNumberModel model= new SpinnerNumberModel(0,0,disp,1);  
+                spnEntradas.setModel(model);
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(null, e, "", 2);
             }
-            SpinnerNumberModel model= new SpinnerNumberModel(0,0,disp,1);  
-            spnEntradas.setModel(model);
-            
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, e, "", 2);
         }
     }//GEN-LAST:event_tblMouseClicked
-    public void setSpinner(int actual,String fecha,String id){       
-        Query query = new Query();   
-        //Para obtener la disponibilidad y despues obtener el maximo de entradas que se puede vender
-        try{
-            ResultSet lista = query.select("disponibilidad", "sesion", " WHERE idTour = '"+id+"' AND fecha='"+fecha+"'");
-            String disponibilidad = "";
-            while(lista.next()){
-                disponibilidad = lista.getString("disponibilidad");
-                break;
-            }
-            lista = query.select("sum(cantidad)","venta"," WHERE idTour = '"+ id+"' AND fecha= '"+fecha+"'");
-            String vendidas= "";
-            while(lista.next()){
-                vendidas = lista.getString("sum(cantidad)");
-                break;
-            }  
-            if(vendidas==null){
-                vendidas="0";
-            }
-            int totalDisponible = Integer.parseInt(disponibilidad) - Integer.parseInt(vendidas) ;
-            if((totalDisponible - actual)<-1){
-                actual = 0;
-            }  
-            SpinnerNumberModel model= new SpinnerNumberModel(0, actual, totalDisponible, 1);  
-            spnEntradas.setModel(model);
 
-        }catch(Exception e){
-                
-        }
-    }
     private void spnEntradasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_spnEntradasMouseEntered
 
     }//GEN-LAST:event_spnEntradasMouseEntered
@@ -403,42 +427,30 @@ public class frmVenta extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel2MouseMoved
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        String nombre = txtNombreCliente.getText();
-        String telefono = txtTelefono.getText();
-        String rut = txtRut.getText();
-        String idTour = cmbIdTour.getItemAt(cmbIdTour.getSelectedIndex());
-        String fechaSesion = txtFecha.getText();
-        String cantidad = spnEntradas.getValue().toString();
-        
-        Query query = new Query();
-        try{
-           
-            
-            query.insert("venta", "null ,CURRENT_TIMESTAMP,'"+nombre+"','"+telefono+"','"+rut+"',"+idTour+", '"+fechaSesion+"',"+cantidad+" ");
-            /*ResultSet idVentaQuery = query.select("max(idVenta)","venta","");
-            // obtener la Id de venta ;V
-            String idVenta="";
-            if(idVentaQuery.next()){
-                idVenta = idVentaQuery.getString("max(idVenta)");
-            }*/
-             //ResultSet disp = query.select("*","sesion"," WHERE idTour="+ idTour+" AND fechaSesion= '"+fechaSesion+"'");
-            byte cant = (byte)((Byte.parseByte(tbl.getValueAt(tbl.getSelectedRow(), 3).toString()))-Byte.parseByte(spnEntradas.getValue().toString()));
-            
-          /*  if(disp.next()){
-                JOptionPane.showMessageDialog(null,disp.getString("disponibilidad"),"",2);
-
-                cant = (byte)(Byte.parseByte(disp.getString("disponibilidad")) - Byte.parseByte(cantidad));
-            }*/
-            query.update("sesion", "disponibilidad ="+cant, " WHERE idTour="+idTour+" AND fecha= '"+fechaSesion+"'");
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null,e,"",2);
+        boolean completo = true;
+        if(txtNombreCliente.getText().equals("") || txtTelefono.getText().equals("") || txtRut.getText().equals("") || spnEntradas.getValue().toString().equals("0")){
+            completo = false;
         }
-        frmVenta venta = new frmVenta();
-        this.dispose();
-        venta.pack();
-        venta.setVisible(true);
-        
-
+        if(tbl.getSelectedRow()!=-1 && completo){
+            String nombre = txtNombreCliente.getText();
+            String telefono = txtTelefono.getText();
+            String rut = txtRut.getText();
+            String idTour = cmbIdTour.getItemAt(cmbIdTour.getSelectedIndex());
+            String fechaSesion = txtFecha.getText();
+            String cantidad = spnEntradas.getValue().toString();
+            Query query = new Query();
+            try{  
+                query.insert("venta", "null ,CURRENT_TIMESTAMP,'"+nombre+"','"+telefono+"','"+rut+"',"+idTour+", '"+fechaSesion+"',"+cantidad+" ");
+                byte cant = (byte)((Byte.parseByte(tbl.getValueAt(tbl.getSelectedRow(), 3).toString()))-Byte.parseByte(spnEntradas.getValue().toString()));
+                query.update("sesion", "disponibilidad ="+cant, " WHERE idTour="+idTour+" AND fecha= '"+fechaSesion+"'");
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(null,e,"",2);
+            }
+            frmVenta venta = new frmVenta();
+            this.dispose();
+            venta.pack();
+            venta.setVisible(true);
+        }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
@@ -451,6 +463,14 @@ public class frmVenta extends javax.swing.JFrame {
     private void txtTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTotalActionPerformed
+
+    private void cmbIdTourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbIdTourActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbIdTourActionPerformed
+
+    private void btnFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltroActionPerformed
+        
+    }//GEN-LAST:event_btnFiltroActionPerformed
     
    
     /**
@@ -490,14 +510,20 @@ public class frmVenta extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
+    private javax.swing.JButton btnFiltro;
     private javax.swing.JButton btnVolver;
+    private javax.swing.JComboBox<String> cmbFecha;
     private javax.swing.JComboBox<String> cmbIdTour;
+    private javax.swing.JComboBox<String> cmbTour;
+    private javax.swing.JComboBox<String> cmbUbicacion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblNombre1;
     private javax.swing.JLabel lblNombre2;
     private javax.swing.JLabel lblNombre3;
