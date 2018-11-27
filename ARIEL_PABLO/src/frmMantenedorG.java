@@ -43,7 +43,7 @@ public class frmMantenedorG extends javax.swing.JFrame {
     }
   
     public void setGuia(){
-        lblTitulo.setText("Guías");
+       
         String[] columnas = {"id","nombre","telefono","Activo"};
         DefaultTableModel model =  new DefaultTableModel(null,columnas);
         Query q = new Query();
@@ -77,7 +77,6 @@ public class frmMantenedorG extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
-        lblTitulo = new javax.swing.JLabel();
         btnAceptar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
@@ -93,6 +92,7 @@ public class frmMantenedorG extends javax.swing.JFrame {
         lblSub = new javax.swing.JLabel();
         cmbActivo = new javax.swing.JComboBox<>();
         lblActivo = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -109,8 +109,6 @@ public class frmMantenedorG extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
-
-        lblTitulo.setText("Mantenedor Guía");
 
         btnAceptar.setText("Aceptar");
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
@@ -197,6 +195,9 @@ public class frmMantenedorG extends javax.swing.JFrame {
 
         lblActivo.setText("Activo:");
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel3.setText("Guía");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -242,16 +243,16 @@ public class frmMantenedorG extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(36, 36, 36))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(169, 169, 169)
-                .addComponent(lblTitulo)
+                .addGap(173, 173, 173)
+                .addComponent(jLabel3)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(lblTitulo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addGap(10, 10, 10)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -479,13 +480,13 @@ public class frmMantenedorG extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbActivo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblActivo;
     private javax.swing.JLabel lblSub;
-    private javax.swing.JLabel lblTitulo;
     private javax.swing.JTable tbl;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtTelefono;
