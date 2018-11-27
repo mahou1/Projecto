@@ -125,6 +125,7 @@ public class frmVenta extends javax.swing.JFrame {
         jLabel4.setText("jLabel4");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setLayout(null);
 
@@ -210,8 +211,21 @@ public class frmVenta extends javax.swing.JFrame {
             }
         });
         spnEntradas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                spnEntradasMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 spnEntradasMouseEntered(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                spnEntradasMousePressed(evt);
+            }
+        });
+        spnEntradas.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                spnEntradasInputMethodTextChanged(evt);
             }
         });
         jPanel1.add(spnEntradas);
@@ -359,11 +373,11 @@ public class frmVenta extends javax.swing.JFrame {
 
         jLabel6.setText("Fecha:");
         jPanel1.add(jLabel6);
-        jLabel6.setBounds(260, 300, 39, 16);
+        jLabel6.setBounds(470, 300, 39, 16);
 
         jLabel7.setText("Tour:");
         jPanel1.add(jLabel7);
-        jLabel7.setBounds(480, 300, 41, 16);
+        jLabel7.setBounds(260, 300, 41, 20);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -380,6 +394,7 @@ public class frmVenta extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtTelefonoGuiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoGuiaActionPerformed
@@ -460,11 +475,14 @@ public class frmVenta extends javax.swing.JFrame {
                 query.insert("venta", "null ,CURRENT_TIMESTAMP,'"+nombre+"','"+telefono+"','"+rut+"',"+idTour+", '"+fechaSesion+"',"+cantidad+" ");
                 byte cant = (byte)((Byte.parseByte(tbl.getValueAt(tbl.getSelectedRow(), 3).toString()))-Byte.parseByte(spnEntradas.getValue().toString()));
                 query.update("sesion", "disponibilidad ="+cant, " WHERE idTour="+idTour+" AND fecha= '"+fechaSesion+"'");
+                 JOptionPane.showMessageDialog(null,"Venta Exitosa","",1);
             }catch(Exception e){
                 JOptionPane.showMessageDialog(null,e,"",2);
             }
             setTblSesiones(tblCondicion());
             limpiar();
+        }else{
+             JOptionPane.showMessageDialog(null,"Rellene todos los campos","",2);
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
@@ -487,6 +505,18 @@ public class frmVenta extends javax.swing.JFrame {
         setTblSesiones(tblCondicion());
         limpiar();
     }//GEN-LAST:event_btnFiltroActionPerformed
+
+    private void spnEntradasInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_spnEntradasInputMethodTextChanged
+     
+    }//GEN-LAST:event_spnEntradasInputMethodTextChanged
+
+    private void spnEntradasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_spnEntradasMouseClicked
+       
+    }//GEN-LAST:event_spnEntradasMouseClicked
+
+    private void spnEntradasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_spnEntradasMousePressed
+             
+    }//GEN-LAST:event_spnEntradasMousePressed
     
     public void limpiar(){
        txtNombreCliente.setText("");

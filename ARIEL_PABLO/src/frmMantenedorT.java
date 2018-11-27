@@ -17,17 +17,11 @@ import javax.swing.table.DefaultTableModel;
  * @author mahou
  */
 public class frmMantenedorT extends javax.swing.JFrame {
-
-    /**
-     * Creates new form Menu
-     */
     public frmMantenedorT() {
         initComponents();
         setTour();
     }
    
-    
-    
     public void setTour(){
         lblTitulo.setText("Tours");
         String[] columnas = {"id","nombre","precio","duracion","Activo"};
@@ -46,7 +40,7 @@ public class frmMantenedorT extends javax.swing.JFrame {
             }
             q.cerrar();
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(null,e,"",2);
+            JOptionPane.showMessageDialog(null,e,"",3);
         }
         tbl.setModel(model);
     }
@@ -104,6 +98,7 @@ public class frmMantenedorT extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         lblTitulo.setText("Mantenedor");
 
@@ -115,6 +110,7 @@ public class frmMantenedorT extends javax.swing.JFrame {
         });
 
         btnModificar.setText("Modificar");
+        btnModificar.setEnabled(false);
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarActionPerformed(evt);
@@ -122,6 +118,7 @@ public class frmMantenedorT extends javax.swing.JFrame {
         });
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.setEnabled(false);
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
@@ -350,6 +347,7 @@ public class frmMantenedorT extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
@@ -364,69 +362,90 @@ public class frmMantenedorT extends javax.swing.JFrame {
         btnCancelar.setEnabled(true);
         btnAceptar.setEnabled(true);
         btnEliminar.setEnabled(false);
+        btnModificar.setEnabled(false);
+         btnAgregar.setEnabled(false);
+        cmbActivo.setSelectedIndex(0);
+        limpiar();
+        txtActivar();
+        
+    }//GEN-LAST:event_btnAgregarActionPerformed
+    public void txtActivar(){
         txtDescripcion.setEnabled(true);
         txtDuracion.setEnabled(true);
         txtNombre.setEnabled(true);
         txtPrecio.setEnabled(true);
         txtUbicacion.setEnabled(true);
         cmbActivo.setEnabled(true);
-        cmbActivo.setSelectedIndex(0);
-        btnModificar.setEnabled(false);
-        txtDescripcion.setText("");
-        txtDuracion.setText("");
-        txtNombre.setText("");
-        txtPrecio.setText("");
-        txtUbicacion.setText("");
-        
-    }//GEN-LAST:event_btnAgregarActionPerformed
-
+    }
+    
+    public void txtDesactivar(){
+        txtDescripcion.setEnabled(false);
+        txtDuracion.setEnabled(false);
+        txtNombre.setEnabled(false);
+        txtPrecio.setEnabled(false);
+        txtUbicacion.setEnabled(false);
+        cmbActivo.setEnabled(false);
+        btnAceptar.setEnabled(false);
+        btnCancelar.setEnabled(false);
+    }
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        String nom,descrip,duracion,ubicacion,estado="";
-        int precio;
+        String nom,descrip,duracion,ubicacion,estado="",precio;
         int index = tbl.getSelectedRow();
-        precio = Integer.parseInt(txtPrecio.getText());
+        precio = txtPrecio.getText();
         ubicacion = txtUbicacion.getText();
         nom = txtNombre.getText();
         descrip = txtDescripcion.getText();
         duracion = txtDuracion.getText();
-        if(cmbActivo.getSelectedItem().equals("S")){
-            estado = " = NULL";
+        boolean completo;
+        if(precio.equals("") || ubicacion.equals("") || nom.equals("") || duracion.equals("") || descrip.equals("")){
+            JOptionPane.showMessageDialog(null,"Rellene todos los campos","Error",2);
         }else{
-            estado = " = CURRENT_TIMESTAMP";
-        }
-        Query query = new Query();
-        if(lblDetalle.getText().equals("Agregar Tour")){ 
-            try{
-                String valores = "null,'"+nom+"','"+descrip+"',"+precio+",'"+duracion+"','"+ubicacion+"',NULL";
-                query.insert("tour",valores);        
+            if(cmbActivo.getSelectedItem().equals("S")){
+                estado = " = NULL";
+            }else{
+                estado = " = CURRENT_TIMESTAMP";
             }
-            catch(Exception e){
-                JOptionPane.showMessageDialog(null,"No se pudo actualizar","",2);
-            }
-        }else{
-           if(lblDetalle.getText().equals("Modificar Tour")){
-                int id = Integer.parseInt(tbl.getValueAt(index,0).toString());
+            Query query = new Query();
+            if(lblDetalle.getText().equals("Agregar Tour")){ 
                 try{
-                    String valores = "nombre='"+nom+"',descripcion='"+descrip+"',precio="+precio+",duracion='"+duracion+"',ubicacion='"+ubicacion+"', deleted_at"+estado;
-                    query.update("tour",valores," WHERE idTour="+id);
-                    JOptionPane.showMessageDialog(null,"Actualizacion exitosa","",2);
+                    String valores = "null,'"+nom+"','"+descrip+"',"+precio+",'"+duracion+"','"+ubicacion+"',NULL";
+                    query.insert("tour",valores);     
+                    JOptionPane.showMessageDialog(null,"Agregacion exitosa","",1);
+                }catch(Exception e){
+                    JOptionPane.showMessageDialog(null,"Error al Agregar "+e,"Error",2);
                 }
-                catch(Exception e){
-                    JOptionPane.showMessageDialog(null,"No se pueod agregar","",2);
+                cmbActivo.setSelectedIndex(0);
+            }else{
+                if(lblDetalle.getText().equals("Modificar Tour")){
+                    int id = Integer.parseInt(tbl.getValueAt(index,0).toString());
+                    try{
+                        String valores = "nombre='"+nom+"',descripcion='"+descrip+"',precio="+precio+",duracion='"+duracion+"',ubicacion='"+ubicacion+"', deleted_at"+estado;
+                        query.update("tour",valores," WHERE idTour="+id);
+                        JOptionPane.showMessageDialog(null,"Actualizacion exitosa","",1);
+                    }catch(Exception e){
+                        JOptionPane.showMessageDialog(null,"No se pudo actualizar "+e,"",2);
+                    }
+                    cmbActivo.setSelectedIndex(-1);
                 }
-          }
-        
+            }
+            setTour();
+            limpiar();
+            query.cerrar();
         }
-        setTour();
-        limpiar();
-        query.cerrar();
+     
+        
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         frmMantenedorT Tour = new frmMantenedorT();
-        this.dispose();
-        Tour.pack();
-        Tour.setVisible(true);
+        limpiar();
+        setTour();
+        btnModificar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        btnAgregar.setEnabled(true);
+        lblDetalle.setText("Detalle Tour");
+        cmbActivo.setSelectedIndex(-1);
+        txtDesactivar();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void tblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMouseClicked
@@ -453,7 +472,11 @@ public class frmMantenedorT extends javax.swing.JFrame {
                 q.cerrar();
             }catch(SQLException e){
                 JOptionPane.showMessageDialog(null,e,"",2);
-            }   
+            } 
+            if(lblDetalle.getText().equals("Detalle Tour")){
+                btnModificar.setEnabled(true);
+                btnEliminar.setEnabled(true);
+            }
         }
        
     }//GEN-LAST:event_tblMouseClicked
@@ -464,14 +487,10 @@ public class frmMantenedorT extends javax.swing.JFrame {
             lblDetalle.setText("Modificar Tour");
             btnCancelar.setEnabled(true);
             btnAceptar.setEnabled(true);
-            txtDescripcion.setEnabled(true);
-            txtDuracion.setEnabled(true);
-            txtNombre.setEnabled(true);
-            txtPrecio.setEnabled(true);
-            txtUbicacion.setEnabled(true);
-            cmbActivo.setEnabled(true);
+            txtActivar();
             btnAgregar.setEnabled(false);
             btnEliminar.setEnabled(false);
+            btnModificar.setEnabled(false);
         };
         
     }//GEN-LAST:event_btnModificarActionPerformed
@@ -494,6 +513,9 @@ public class frmMantenedorT extends javax.swing.JFrame {
             }
             setTour();
             limpiar();
+            btnEliminar.setEnabled(false);
+            btnModificar.setEnabled(false);
+            cmbActivo.setSelectedIndex(-1);
         }
         
     }//GEN-LAST:event_btnEliminarActionPerformed
@@ -504,7 +526,6 @@ public class frmMantenedorT extends javax.swing.JFrame {
         txtUbicacion.setText("");
         txtPrecio.setText("");
         txtDuracion.setText("");
-        cmbActivo.setSelectedIndex(-1);
     }
     private void cmbActivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbActivoActionPerformed
         // TODO add your handling code here:

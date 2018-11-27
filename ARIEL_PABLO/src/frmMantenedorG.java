@@ -24,16 +24,17 @@ public class frmMantenedorG extends javax.swing.JFrame {
     public frmMantenedorG() {
         initComponents();
         setGuia();
-        desactivarAgregar();
+        desactivarTxt();
     }
-    public void desactivarAgregar(){
+    public void desactivarTxt(){
         txtNombre.setEnabled(false);
         txtTelefono.setEnabled(false);
         btnAceptar.setEnabled(false);
         btnCancelar.setEnabled(false);
+        cmbActivo.setEnabled(false);
        
     }
-    public void activarAgregar(){
+    public void activarTxt(){
         txtNombre.setEnabled(true);
         txtTelefono.setEnabled(true);
         btnAceptar.setEnabled(true);
@@ -61,10 +62,7 @@ public class frmMantenedorG extends javax.swing.JFrame {
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null,e,"",2);
         }
-        
         tbl.setModel(model);
-        
-        
     }
     
     /**
@@ -110,6 +108,7 @@ public class frmMantenedorG extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         lblTitulo.setText("Mantenedor Guía");
 
@@ -121,6 +120,7 @@ public class frmMantenedorG extends javax.swing.JFrame {
         });
 
         btnModificar.setText("Modificar");
+        btnModificar.setEnabled(false);
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarActionPerformed(evt);
@@ -128,6 +128,7 @@ public class frmMantenedorG extends javax.swing.JFrame {
         });
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.setEnabled(false);
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
@@ -183,7 +184,7 @@ public class frmMantenedorG extends javax.swing.JFrame {
             }
         });
 
-        lblSub.setText("Detalles ");
+        lblSub.setText("Detalles");
 
         cmbActivo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "S", "N" }));
         cmbActivo.setSelectedIndex(-1);
@@ -291,48 +292,58 @@ public class frmMantenedorG extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        reset();       
-        
+        reset();   
+        desactivarTxt();
+        btnAgregar.setEnabled(true);
+        cmbActivo.setSelectedIndex(-1);
+        lblSub.setText("Detalles");
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         String nom,telefono,estado="";
         nom = txtNombre.getText();
         telefono = txtTelefono.getText();
-        Query query = new Query();
-        if(cmbActivo.getSelectedItem().equals("S")){
-            estado = " = NULL";
+        if(nom.equals("") || telefono.equals("")){
+            JOptionPane.showMessageDialog(null,"Rellene todos los campos","Error",2);
         }else{
-            estado = " = CURRENT_TIMESTAMP";
-        }
-        if(lblSub.getText().equals("Agregar Guia")){
-            String valores = "null,'"+nom+"','"+telefono+"',NULL";
-            query.insert("guia",valores);
-            JOptionPane.showMessageDialog(null,"Agregado exitosamente","",2); 
-        }else{
-            if(lblSub.getText().equals("Modificar Guia")){
-                int index =  tbl.getSelectedRow();
-                int indice = Integer.parseInt(tbl.getValueAt(index, 0).toString());
-                String valor = "nombre = '"+ nom+"', telefono = '"+telefono+"', deleted_at"+estado ;
-                String cond = " WHERE idGuia = "+ indice;
-                query.update("guia", valor, cond);
-            
-                        //String tabla,String data,String condicion){
-                        //"UPDATE  "+tabla+" SET "+data+condicion
+            Query query = new Query();
+            if(cmbActivo.getSelectedItem().equals("S")){
+                estado = " = NULL";
+            }else{
+                estado = " = CURRENT_TIMESTAMP";
             }
+            if(lblSub.getText().equals("Agregar Guia")){
+                try{
+                    String valores = "null,'"+nom+"','"+telefono+"',NULL";
+                    query.insert("guia",valores);
+                    cmbActivo.setSelectedIndex(0);
+                    JOptionPane.showMessageDialog(null,"Agregacion exitosa","",1); 
+                 }catch(Exception e){
+                    JOptionPane.showMessageDialog(null,"Error al Agregar "+e,"Error",2);
+                }
+            }else{
+                if(lblSub.getText().equals("Modificar Guia")){
+                    try{
+                        int index =  tbl.getSelectedRow();
+                        int indice = Integer.parseInt(tbl.getValueAt(index, 0).toString());
+                        String valor = "nombre = '"+ nom+"', telefono = '"+telefono+"', deleted_at"+estado ;
+                        String cond = " WHERE idGuia = "+ indice;
+                        query.update("guia", valor, cond);
+                        cmbActivo.setSelectedIndex(-1);
+                        JOptionPane.showMessageDialog(null,"Actualizacion exitosa","",1); 
+                    }catch(Exception e){
+                        JOptionPane.showMessageDialog(null,"No se pudo actualizar "+e,"Error",2);
+                }   
+            }
+                
+            }
+            query.cerrar();
+            reset();
         }
-        
-        
-        txtNombre.setText("");
-        txtTelefono.setText("");
-        
-        reset();
-        
-      
-        
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
@@ -343,11 +354,11 @@ public class frmMantenedorG extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        activarAgregar();
+        activarTxt();
         txtNombre.setText("");
         txtTelefono.setText("");
         lblSub.setText("Agregar Guia");
-         btnAgregar.setEnabled(false);
+        btnAgregar.setEnabled(false);
         btnModificar.setEnabled(false);
         btnEliminar.setEnabled(false);
         cmbActivo.setSelectedIndex(0);
@@ -366,12 +377,17 @@ public class frmMantenedorG extends javax.swing.JFrame {
                      }
             txtNombre.setText(nombre);
             txtTelefono.setText(telefono);
+            if(lblSub.getText().equals("Detalles")){
+                btnModificar.setEnabled(true);
+                btnEliminar.setEnabled(true);
+            }
+            
          }
     }//GEN-LAST:event_tblMouseClicked
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         if(tbl.getSelectedRow()!=-1){
-            activarAgregar();
+            activarTxt();
             lblSub.setText("Modificar Guia");
             btnAgregar.setEnabled(false);
             btnModificar.setEnabled(false);
@@ -408,10 +424,11 @@ public class frmMantenedorG extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbActivoActionPerformed
     public void reset(){
-        this.dispose();
-        frmMantenedorG mantenedor = new frmMantenedorG();
-        mantenedor.pack();
-        mantenedor.setVisible(true);
+        setGuia();
+        txtNombre.setText("");
+        txtTelefono.setText("");
+        btnModificar.setEnabled(false);
+        btnEliminar.setEnabled(false);
     }
      
     /**
