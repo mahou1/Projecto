@@ -32,9 +32,9 @@ public class frmVenta extends javax.swing.JFrame {
         setCmb("tour","tour.nombre",cmbTour);
         setCmb("sesion","fecha",cmbFecha);
         setCmb("tour","ubicacion",cmbUbicacion);
-        cmbTour.setSelectedIndex(-1);
-        cmbUbicacion.setSelectedIndex(-1);
-        cmbFecha.setSelectedIndex(-1);
+        cmbTour.setSelectedIndex(0);
+        cmbUbicacion.setSelectedIndex(0);
+        cmbFecha.setSelectedIndex(0);
     }
  
     public void setCmb(String tabla,String col,JComboBox a){
@@ -43,13 +43,13 @@ public class frmVenta extends javax.swing.JFrame {
          lista = query.select("DISTINCT "+col,"tour"," INNER JOIN sesion ON sesion.idTour= tour.idTour INNER JOIN guia ON guia.idGuia = sesion.idGuia"
                     + " WHERE sesion.deleted_at is Null  AND tour.deleted_at is NULL AND guia.deleted_at is NULL");
          try{
+             a.addItem("Sin seleccion");
              while(lista.next()){
                  a.addItem(lista.getString(col));
              }
          }catch(Exception e){
             JOptionPane.showMessageDialog(null, e, "", 2);
-         }
-         
+         }   
     }
     public void setTblSesiones(String condicion){
         Query query = new Query();
@@ -65,7 +65,8 @@ public class frmVenta extends javax.swing.JFrame {
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e, "", 2);   
         }
-        tbl.setModel(model); 
+        tbl.setModel(model);
+       
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -117,6 +118,9 @@ public class frmVenta extends javax.swing.JFrame {
         cmbTour = new javax.swing.JComboBox<>();
         cmbFecha = new javax.swing.JComboBox<>();
         btnFiltro = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
 
         jLabel4.setText("jLabel4");
 
@@ -148,7 +152,7 @@ public class frmVenta extends javax.swing.JFrame {
 
         lblTitulo5.setText("Datos Sesion");
         jPanel1.add(lblTitulo5);
-        lblTitulo5.setBounds(550, 360, 74, 23);
+        lblTitulo5.setBounds(550, 360, 110, 23);
 
         lblTitulo6.setText("Nombre :");
         jPanel1.add(lblTitulo6);
@@ -330,12 +334,12 @@ public class frmVenta extends javax.swing.JFrame {
         cmbIdTour.setBounds(790, 390, 31, 22);
 
         jPanel1.add(cmbUbicacion);
-        cmbUbicacion.setBounds(130, 300, 100, 22);
+        cmbUbicacion.setBounds(110, 300, 140, 22);
         jPanel1.add(jSeparator1);
         jSeparator1.setBounds(0, 342, 930, 10);
 
         jPanel1.add(cmbTour);
-        cmbTour.setBounds(270, 300, 160, 22);
+        cmbTour.setBounds(300, 300, 160, 22);
 
         jPanel1.add(cmbFecha);
         cmbFecha.setBounds(520, 300, 120, 22);
@@ -348,6 +352,18 @@ public class frmVenta extends javax.swing.JFrame {
         });
         jPanel1.add(btnFiltro);
         btnFiltro.setBounds(720, 300, 61, 25);
+
+        jLabel5.setText("Ubicacion:");
+        jPanel1.add(jLabel5);
+        jLabel5.setBounds(40, 300, 60, 16);
+
+        jLabel6.setText("Fecha:");
+        jPanel1.add(jLabel6);
+        jLabel6.setBounds(260, 300, 39, 16);
+
+        jLabel7.setText("Tour:");
+        jPanel1.add(jLabel7);
+        jLabel7.setBounds(480, 300, 41, 16);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -383,6 +399,7 @@ public class frmVenta extends javax.swing.JFrame {
             Query q = new Query();
             ResultSet lista;
             try{
+              
                 lista = q.select("*","tour"," INNER JOIN sesion ON sesion.idTour= tour.idTour INNER JOIN guia ON guia.idGuia = sesion.idGuia"
                         + " WHERE sesion.deleted_at is Null  AND tour.deleted_at is NULL AND guia.deleted_at is NULL AND tour.nombre='"+nomTour+"' AND sesion.fecha='"+fecha+"'");
                 txtNombreTour.setText(nomTour);
@@ -446,10 +463,8 @@ public class frmVenta extends javax.swing.JFrame {
             }catch(Exception e){
                 JOptionPane.showMessageDialog(null,e,"",2);
             }
-            frmVenta venta = new frmVenta();
-            this.dispose();
-            venta.pack();
-            venta.setVisible(true);
+            setTblSesiones(tblCondicion());
+            limpiar();
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
@@ -469,9 +484,38 @@ public class frmVenta extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbIdTourActionPerformed
 
     private void btnFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltroActionPerformed
-        
+        setTblSesiones(tblCondicion());
+        limpiar();
     }//GEN-LAST:event_btnFiltroActionPerformed
     
+    public void limpiar(){
+       txtNombreCliente.setText("");
+       txtNombreGuia.setText("");
+       txtNombreTour.setText("");
+       txtFecha.setText("");
+       txtRut.setText("");
+       txtTelefonoGuia.setText("");
+       txtTelefono.setText("");
+       txtUbicacion.setText("");
+       txtRut.setText("");
+       txtPrecio.setText("");
+       txtDuracion.setText("");
+       spnEntradas.setValue(0);
+    }
+    
+    public String tblCondicion(){
+       String condicion = "";
+        if(!(cmbTour.getSelectedItem().toString().equals("Sin seleccion"))){
+           condicion += " AND tour.nombre='"+cmbTour.getSelectedItem().toString()+"'";
+        }
+        if(!(cmbUbicacion.getSelectedItem().toString().equals("Sin seleccion"))){
+           condicion += " AND tour.ubicacion='"+cmbUbicacion.getSelectedItem().toString()+"'";
+        }
+        if(!(cmbFecha.getSelectedItem().toString().equals("Sin seleccion"))){
+           condicion += " AND sesion.fecha='"+cmbFecha.getSelectedItem().toString()+"'";
+        }
+        return condicion;
+    }
    
     /**
      * @param args the command line arguments
@@ -520,6 +564,9 @@ public class frmVenta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane3;

@@ -380,23 +380,23 @@ public class frmMantenedorG extends javax.swing.JFrame {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        
-        
-        String nom = txtNombre.getText();
-        int opc = JOptionPane.showConfirmDialog(null, "¿Desea eliminar "+nom+" ?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if(opc==0){
-            int index =  tbl.getSelectedRow();
-            int indice = Integer.parseInt(tbl.getValueAt(index, 0).toString());
-            Query query = new Query();
-            try{
-                query.delete("guia", "idGuia = "+indice );
-
+        if(tbl.getSelectedRow()!=-1){
+            String nom = txtNombre.getText();
+            int opc = JOptionPane.showConfirmDialog(null, "¿Desea eliminar "+nom+" ?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(opc==0){
+                int index =  tbl.getSelectedRow();
+                int indice = Integer.parseInt(tbl.getValueAt(index, 0).toString());
+                Query query = new Query();
+                try{
+                    query.delete("guia", "idGuia = "+indice );
+                }
+                catch(Exception e){
+                    JOptionPane.showMessageDialog(null,"Error al Eliminar","",2);
+                }
+                reset();
             }
-            catch(Exception e){
-                JOptionPane.showMessageDialog(null,"Error al Eliminar","",2);
-            }
-            reset();
         }
+       
                 
     }//GEN-LAST:event_btnEliminarActionPerformed
 

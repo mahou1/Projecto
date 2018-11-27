@@ -413,28 +413,12 @@ public class frmMantenedorT extends javax.swing.JFrame {
                 }
                 catch(Exception e){
                     JOptionPane.showMessageDialog(null,"No se pueod agregar","",2);
-            }
-          }else{
-               if(lblDetalle.getText().equals("Eliminar Tour")){
-                    int opc = JOptionPane.showConfirmDialog(null, "¿Desea eliminar "+nom+" ?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                    if(opc==0){
-                        int indice = Integer.parseInt(tbl.getValueAt(index, 0).toString());
-                        try{
-                            query.delete("tour", "idTour="+tbl.getValueAt(tbl.getSelectedRow(),0));
-                         
-                        }catch(Exception ee){
-                            JOptionPane.showMessageDialog(null,"No se pueod agregar","",2);
-                        }                        
-                    }
-                   
-               }
+                }
           }
         
         }
-        frmMantenedorT Tour = new frmMantenedorT();
-        this.dispose();
-        Tour.pack();
-        Tour.setVisible(true);
+        setTour();
+        limpiar();
         query.cerrar();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
@@ -495,15 +479,33 @@ public class frmMantenedorT extends javax.swing.JFrame {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         int e = tbl.getSelectedRow();
         if(e!=-1){
-        btnAgregar.setEnabled(false);
-        btnModificar.setEnabled(false);
-        lblDetalle.setText("Eliminar Tour");
-        btnAceptar.setEnabled(true);
-        btnCancelar.setEnabled(true);
-        
+            String nom = txtNombre.getText();
+            int index = tbl.getSelectedRow();
+            Query query = new Query();
+            int opc = JOptionPane.showConfirmDialog(null, "¿Desea eliminar "+nom+" ?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(opc==0){
+                int indice = Integer.parseInt(tbl.getValueAt(index, 0).toString());
+                try{
+                    query.delete("tour", "idTour="+tbl.getValueAt(tbl.getSelectedRow(),0));
+
+                }catch(Exception ee){
+                    JOptionPane.showMessageDialog(null,"No se pueod agregar","",2);
+                }                        
+            }
+            setTour();
+            limpiar();
         }
+        
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    public void limpiar(){
+        txtNombre.setText("");
+        txtDescripcion.setText("");
+        txtUbicacion.setText("");
+        txtPrecio.setText("");
+        txtDuracion.setText("");
+        cmbActivo.setSelectedIndex(-1);
+    }
     private void cmbActivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbActivoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbActivoActionPerformed

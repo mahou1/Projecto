@@ -25,7 +25,7 @@ public class frmMantenedorS extends javax.swing.JFrame {
         initComponents();
         setSesion();
         lblTitulo.setText("Sesiones");
-        cmbIdTour.setVisible(false);
+       // cmbIdTour.setVisible(false);
         cmbIdGuia.setVisible(false);
         cmbTour.setSelectedIndex(-1);
         cmbGuia.setSelectedIndex(-1);
@@ -129,6 +129,11 @@ public class frmMantenedorS extends javax.swing.JFrame {
         });
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnVolver.setText("Volver");
         btnVolver.addActionListener(new java.awt.event.ActionListener() {
@@ -430,13 +435,18 @@ public class frmMantenedorS extends javax.swing.JFrame {
             }
         }
         q.cerrar();
-        frmMantenedorS sesion = new frmMantenedorS();
-        this.dispose();
-        sesion.pack();
-        sesion.setVisible(true);
+        limpiar();
+        setSesion();
         
     }//GEN-LAST:event_btnAceptarActionPerformed
-
+    public void limpiar(){
+        cmbIdGuia.setSelectedIndex(-1);
+        cmbIdTour.setSelectedIndex(-1);
+        cmbGuia.setSelectedIndex(-1);
+        txtDisponibilidad.setText("");
+        txtFecha.setText("");
+        cmbTour.setSelectedIndex(-1);
+    }
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
         frmMantenedorS sesion = new frmMantenedorS();
@@ -483,11 +493,13 @@ public class frmMantenedorS extends javax.swing.JFrame {
             for(int i = 0 ; i< cmbTour.getItemCount();i++){
                 if(cmbTour.getItemAt(i).equals(tour)){
                     cmbTour.setSelectedIndex(i);
+                    cmbIdTour.setSelectedIndex(i);
                 }
             }
             for(int i = 0 ; i< cmbGuia.getItemCount();i++){
                 if(cmbGuia.getItemAt(i).equals(guia)){
                     cmbGuia.setSelectedIndex(i);
+                    cmbIdGuia.setSelectedIndex(i);
                 }
             }
             txtFecha.setText(fecha);
@@ -509,6 +521,27 @@ public class frmMantenedorS extends javax.swing.JFrame {
             btnEliminar.setEnabled(false);
         };       
     }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        int e = tbl.getSelectedRow();
+        if(e!=-1){
+            String nom = cmbTour.getSelectedItem().toString();
+            String fecha= txtFecha.getText();
+            int idTour=Integer.parseInt(cmbIdTour.getItemAt(cmbIdTour.getSelectedIndex()));
+            Query query = new Query();
+            int opc = JOptionPane.showConfirmDialog(null, "¿Desea eliminar "+nom+" "+fecha+" ?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(opc==0){
+                
+                try{
+                    query.delete("sesion", " idTour="+idTour+" AND fecha='"+fecha+"'");
+                }catch(Exception ee){
+                    JOptionPane.showMessageDialog(null,"No se pudo eliminar","",2);
+                }                        
+            }
+            setSesion();
+            limpiar();
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
      * @param args the command line arguments
