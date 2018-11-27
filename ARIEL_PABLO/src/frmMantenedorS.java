@@ -103,7 +103,7 @@ public class frmMantenedorS extends javax.swing.JFrame {
         txtFecha = new javax.swing.JTextField();
         cmbIdTour = new javax.swing.JComboBox<>();
         cmbIdGuia = new javax.swing.JComboBox<>();
-        jLabel4 = new javax.swing.JLabel();
+        lblTitulo = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -305,8 +305,8 @@ public class frmMantenedorS extends javax.swing.JFrame {
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel4.setText("Sesiones");
+        lblTitulo.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        lblTitulo.setText("Sesiones");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -328,7 +328,7 @@ public class frmMantenedorS extends javax.swing.JFrame {
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(204, 204, 204)
-                        .addComponent(jLabel4))
+                        .addComponent(lblTitulo))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -338,7 +338,7 @@ public class frmMantenedorS extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(jLabel4)
+                .addComponent(lblTitulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
@@ -632,7 +632,6 @@ public class frmMantenedorS extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbTour;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
@@ -640,6 +639,7 @@ public class frmMantenedorS extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblDetalle;
     private javax.swing.JLabel lblDisponibilidad;
+    private javax.swing.JLabel lblTitulo;
     private javax.swing.JLabel lblTour;
     private javax.swing.JTable tbl;
     private javax.swing.JTextField txtDisponibilidad;

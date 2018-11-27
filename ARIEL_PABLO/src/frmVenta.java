@@ -507,18 +507,7 @@ public class frmVenta extends javax.swing.JFrame {
         menu.setVisible(true);
     }//GEN-LAST:event_btnVolverActionPerformed
 
-    private void txtTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTotalActionPerformed
-
-    private void cmbIdTourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbIdTourActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbIdTourActionPerformed
-
-    private void btnFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltroActionPerformed
-        setTblSesiones(tblCondicion());
-        limpiar();
-    }//GEN-LAST:event_btnFiltroActionPerformed
+  
 
     private void spnEntradasInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_spnEntradasInputMethodTextChanged
 
