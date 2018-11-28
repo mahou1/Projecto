@@ -64,6 +64,7 @@ public class frmMantenedorS extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,e,"",2);
         }
         tbl.setModel(model);
+        tbl.setDefaultEditor(Object.class, null);
         cmbGuia.setSelectedIndex(-1);
         cmbIdGuia.setSelectedIndex(-1);
         cmbTour.setSelectedIndex(-1);
@@ -471,7 +472,7 @@ public class frmMantenedorS extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbIdTourActionPerformed
 
     private void tblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMouseClicked
-        if(tbl.getSelectedRow()!=-1){
+        if(tbl.getSelectedRow()!=-1 && !lblDetalle.getText().equals("Agregar Sesion")){
             int index,idTour=0;
             index= tbl.getSelectedRow();
             String tour="",fecha="" ,guia="",disponibilidad="";

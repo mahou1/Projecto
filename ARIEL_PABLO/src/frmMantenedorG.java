@@ -63,6 +63,7 @@ public class frmMantenedorG extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,e,"",2);
         }
         tbl.setModel(model);
+        tbl.setDefaultEditor(Object.class, null);
     }
     
     /**
@@ -366,7 +367,7 @@ public class frmMantenedorG extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void tblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMouseClicked
-         if(tbl.getSelectedRow()!=-1){
+         if(tbl.getSelectedRow()!=-1 && !lblSub.getText().equals("Agregar Guia") ){
             int index =  tbl.getSelectedRow();
             String id = tbl.getValueAt(index, 0).toString();
             String nombre = tbl.getValueAt(index,1).toString();

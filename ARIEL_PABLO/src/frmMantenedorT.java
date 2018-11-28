@@ -43,6 +43,7 @@ public class frmMantenedorT extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,e,"",3);
         }
         tbl.setModel(model);
+        tbl.setDefaultEditor(Object.class, null);
     }
     
   
@@ -278,7 +279,7 @@ public class frmMantenedorT extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblNombre4))
                 .addGap(18, 18, 18)
-                .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAceptar)
                     .addComponent(btnCancelar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -447,7 +448,7 @@ public class frmMantenedorT extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void tblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMouseClicked
-        if(tbl.getSelectedRow()!=-1){
+        if(tbl.getSelectedRow()!=-1 && !lblDetalle.getText().equals("Agregar Tour")){
             int index = tbl.getSelectedRow();
             int id = Integer.parseInt(tbl.getValueAt(index, 0).toString());
 
