@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-11-2018 a las 19:55:44
+-- Tiempo de generación: 28-11-2018 a las 01:52:41
 -- Versión del servidor: 10.1.36-MariaDB
 -- Versión de PHP: 7.2.11
 
@@ -42,7 +42,11 @@ CREATE TABLE `guia` (
 --
 
 INSERT INTO `guia` (`idGuia`, `nombre`, `telefono`, `deleted_at`) VALUES
-(1, 'Pablo', '222222', NULL);
+(1, 'Pablo', '222222', NULL),
+(2, 'Jony', '23456', NULL),
+(3, 'Raton', '6565', NULL),
+(4, 'Pancho', '4444', NULL),
+(6, 'Lucila', '777', NULL);
 
 -- --------------------------------------------------------
 
@@ -63,7 +67,12 @@ CREATE TABLE `sesion` (
 --
 
 INSERT INTO `sesion` (`idTour`, `fecha`, `disponibilidad`, `deleted_at`, `idGuia`) VALUES
-(1, '2018-09-21', 0, NULL, 1);
+(1, '2014-02-22', 7, NULL, 3),
+(1, '2018-02-11', 12, NULL, 1),
+(1, '2018-09-21', 0, '2018-11-28 00:50:21', 1),
+(1, '2018-10-22', 5, NULL, 1),
+(2, '2018-08-09', 7, NULL, 3),
+(3, '2017-06-12', 3, NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -86,7 +95,9 @@ CREATE TABLE `tour` (
 --
 
 INSERT INTO `tour` (`idTour`, `nombre`, `descripcion`, `precio`, `duracion`, `ubicacion`, `deleted_at`) VALUES
-(1, 'ValpoTour', 'asdadsa', 1200, '20 minutos', 'valpo', NULL);
+(1, 'ValpoTour', 'asdadsa', 1200, '20 minutos', 'valpo', NULL),
+(2, 'ViñaTour', 'asdads', 2000, '2 minutos', 'viña', NULL),
+(3, 'KheTour', 'asd', 10000, '3 horas', 'concon', '2018-11-28 00:32:30');
 
 -- --------------------------------------------------------
 
@@ -112,7 +123,8 @@ CREATE TABLE `venta` (
 INSERT INTO `venta` (`idVenta`, `fechaVenta`, `nombre`, `telefono`, `rut`, `idTour`, `fechaSesion`, `cantidad`) VALUES
 (11, '2018-11-26', 'aa', 'aaaa', '1211', 1, '2018-09-21', 5),
 (12, '2018-11-26', 'aaaa', '1111', '222', 1, '2018-09-21', 5),
-(13, '2018-11-26', 'bbbb', '11122', '444', 1, '2018-09-21', 10);
+(13, '2018-11-26', 'bbbb', '11122', '444', 1, '2018-09-21', 10),
+(14, '2018-11-27', 'Juanito', '222', '333', 1, '2018-10-22', 7);
 
 --
 -- Índices para tablas volcadas
@@ -152,19 +164,19 @@ ALTER TABLE `venta`
 -- AUTO_INCREMENT de la tabla `guia`
 --
 ALTER TABLE `guia`
-  MODIFY `idGuia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idGuia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `tour`
 --
 ALTER TABLE `tour`
-  MODIFY `idTour` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idTour` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `venta`
 --
 ALTER TABLE `venta`
-  MODIFY `idVenta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `idVenta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Restricciones para tablas volcadas
